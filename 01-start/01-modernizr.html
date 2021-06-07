@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./modernizr.js"></script>
+  </head>
+
+  <body>
+    <canvas>이 브라우저는 canvas를 지원하지 않습니다.</canvas>
+
+    <script>
+      if(Modernizr.canvas) {
+        console.log("이 브라우저는 canvas를 지원합니다");
+      }
+
+      const canvas = document.querySelector("canvas");
+      console.log(canvas.getContext("2d"));
+    </script>
+  </body>
+</html>
