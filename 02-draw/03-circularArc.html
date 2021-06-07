@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+
+  <body>
+    <canvas class="myCanvas" width="600" height="400"></canvas>
+
+    <script>
+      function toRadian(deg) {
+        return deg * (Math.PI / 180);
+      }
+
+      const myCanvas = document.querySelector(".myCanvas");
+      const context = myCanvas.getContext("2d");
+
+      context.beginPath();
+      context.arc(300, 200, 50, toRadian(0), toRadian(360));
+      context.stroke();
+
+      context.beginPath();
+      context.arc(500, 100, 20, toRadian(0), toRadian(360));
+      context.stroke();
+    </script>
+  </body>
+</html>

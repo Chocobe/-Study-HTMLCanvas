@@ -240,4 +240,62 @@
 
 
 
-## 06.
+## 06. 원호 그리기
+
+``Circular Arc``의 뜻은 ``원호`` 입니다.
+
+``context`` 객체의 ``arc()`` 메서드가 바로 ``원호``를 그리는 메서드 입니다.
+
+그리는 원리는 ``선 그리기(lineTo())``와 비슷하며, 필요한 인자가 ``원호``를 그리기 위한 값일 뿐입니다.
+
+``원호``를 그리는데 ``360도``만큼 그리면 원이 되므로, 원을 그릴때 역시 ``context.arc()`` 메서드를 사용합니다.
+
+원호를 그리기위한 메서드는 다음과 같습니다.
+
+1. ``context.beginPath()``: 선 그리기를 시작 합니다.
+2. ``context.arc(중심점x, 중심점y, 반지름, 시작각도(Radian값), 끝각도(Radian값), 반시계 회전 여부? = false);
+3. ``context.stroke()``: 그려진 호를 ``Rendering``
+
+```html
+<body>
+  <canvas class="myCanvas" width="600" height="400"></canvas>
+
+  <script>
+    // 각도를 Radian값으로 변환 메서드
+    function toRadian(deg) {
+      return deg * (Math.PI / 180);
+    }
+    
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+
+    // 선 그리기 시작
+    context.beginPath();
+    // 원호 그리기 (시계방향 그리기)
+    context.arc(300, 200, 50, toRadian(0), toRadian(360), false);
+    // Rendering 실행
+    context.stroke();
+
+    // 선 그리기 시작
+    context.beginPath();
+    // 원호 그리기 (반시계 방향 그리기)
+    context.arc(500, 100, 25, toRadian(0), toRadian(180), true);
+    // Rendering 실행
+    context.stroke();
+  </script>
+</body>
+```
+
+<br/>
+
+위 코드의 결과는 다음과 같습니다.
+
+<img src="./readmeAssets/06-arc-01.png" width="700px" alt="이미지: 원호 그리기 결과"><br/>
+
+
+
+<br/><hr/><br/>
+
+
+
+## 07.
