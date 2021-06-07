@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      .myCanvas {
+        width: 600px;
+        height: 400px;
+
+        background-color: rgba(226, 92, 0, 0.2);
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Canvas 그리기</h1>
+
+    <canvas class="myCanvas" width="1200" height="800"></canvas>
+
+    <script>
+      const canvas = document.querySelector(".myCanvas");
+      const context = canvas.getContext("2d");
+
+      context.fillRect(50, 50, 100, 100);
+      context.fillStyle = "rgba(0, 64, 0, 1)";
+      context.fillRect(0, 0, 100, 100);
+      context.clearRect(50, 50, 50, 50);
+      context.strokeRect(150, 150, 100, 100);
+    </script>
+  </body>
+</html>

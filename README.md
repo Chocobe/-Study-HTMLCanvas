@@ -109,3 +109,79 @@
   <canvas class="myCanvas" width="1000" height="500"></canvas>
 </body>
 ```
+
+
+
+<br/><hr/><br/>
+
+
+
+## 04. 사각형 그리기 & 지우기
+
+``<canvas>``를 사용해서 그림을 그리기 위해서는 대상 ``<canvas>``의 ``context`` 객체가 필요 합니다.
+
+``context`` 객체는 ``HTML 요소 접근`` 방법을 통해서 가져올 수 있습니다.
+
+```html
+<body>
+  <canvas class="myCanvas"></canvas>
+
+  <script>
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+  </script>
+</body>
+```
+
+<br/>
+
+위의 코드처럼 ``getContext("2d")`` 함수에서 반환된 객체가 ``2D용 context``객체 입니다.
+
+<br/>
+
+이제 사격형을 그리기 위해, 다음 속성과 함수를 사용할 것입니다.
+
+1. ``context.fillStyle 속성``: 색상 설정
+2. ``context.fillRect(시작x, 시작y, width값, height값)``: 색이 칠해진 사각형을 그립니다.
+3. ``context.strokeRect(시작x, 시작y, width값, height값)``: 사각형 외곽선만 그립니다.
+4. ``context.clearRect(시작x, 시작y, width값, height값)``: 사각형을 지웁니다.
+
+```html
+<body>
+  <canvas class="myCanvas"></canvas>
+
+  <script>
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+
+    // 사각형 그리기 (검은색)
+    context.fillRect(50, 50, 100, 100);
+
+    // rgba(0, 64, 0, 1) 색으로 설정
+    context.fillStyle = "rgba(0, 64, 0, 1);
+
+    // 사각형 그리기 (초록색);
+    context.fillRect(0, 0, 100, 100);
+
+    // 사각형 지우기
+    context.clearRect(50, 50, 50, 50);
+
+    // 사각형 외곽선 그리기
+    context.strokeRect(150, 150, 100, 100);
+  </script>
+</body>
+```
+
+<br/>
+
+위 코드의 결과는 다음과 같습니다.
+
+<img src="./readmeAssets/02-draw-01.png" width="700px" alt="이미지: 사각형 그리기 결과"><br/>
+
+
+
+<br/><hr/><br/>
+
+
+
+## 05. 
