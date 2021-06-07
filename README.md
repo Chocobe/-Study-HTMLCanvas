@@ -184,4 +184,60 @@
 
 
 
-## 05. 
+## 05. 선 그리기
+
+닫혀있는 도형이 아닌 선을 그리는 방법 입니다.
+
+선을 그리기 위해서는 다음과 같은 ``context`` 메서드를 사용합니다.
+
+1. ``context.beginPath()``: ``선`` 그리기 시작을 알리는 메서드
+2. ``context.moveTo(x좌표, y좌표)``: canvas에 그릴 ``붓``의 위치를 이동하는 메서드 입니다.
+3. ``context.lineTo(x좌표, y좌쇼)``: 마지막점에서 ``lineTo(x좌표, y좌표)``까지 직선을 그립니다.
+    * 실제 화면에 ``Rendering``되지는 않고, ``context.stroke()`` 또는 ``context.fill()`` 메서드를 호출해야 ``Rendering`` 됩니다.
+4. ``context.closePath()``: 시작점과 마지막점을 직선으로 연결 합니다.
+    * 실제 화면에 ``Rendering``되지는 않고, ``context.stroke()`` 또는 ``context.fill()`` 메서드를 호출해야 ``Rendering`` 됩니다.
+5. ``context.stroke()``: 그려진 선을 화면에 ``Rendering`` 합니다.
+6. ``context.fill()``: 그려진 도형을 화면에 ``Rendering`` 합니다.
+    * 닫힌 도형이 아니면, 아무 동작도 하지 않습니다.
+
+<br/>
+
+```html
+<body>
+  <canvas class="myCanvas"></canvas>
+
+  <script>
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+
+    // 선 그리기 시작
+    context.beginPath();
+
+    // 붓 이동
+    context.moveTo(100, 100);
+    // (x좌표, y좌표)까지 직선 그리기
+    context.lineTo(300, 100);
+    context.lineTo(150, 150);
+
+    // 시작점과 마지막점을 연결하여, 선 그리기 종료
+    context.closePath();
+
+    // 그려진 선을 화면에 Rendering
+    context.stroke();
+  </script>
+</body>
+```
+
+<br/>
+
+위 코드의 결과는 다음과 같습니다.
+
+<img src="./readmeAssets/05-path-01.png" width="700px" alt="이미지: 선 그리기 결과"><br/>
+
+
+
+<br/><hr/><br/>
+
+
+
+## 06.

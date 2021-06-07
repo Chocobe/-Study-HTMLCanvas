@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+
+  <body>
+    <canvas class="myCanvas"></canvas>
+
+    <script>
+      const myCanvas = document.querySelector(".myCanvas");
+      const context = myCanvas.getContext("2d");
+
+      context.beginPath();
+      context.moveTo(100, 100);
+      context.lineTo(300, 100);
+      context.lineTo(150, 150);
+      
+      context.closePath();
+      context.stroke();
+    </script>
+  </body>
+</html>
