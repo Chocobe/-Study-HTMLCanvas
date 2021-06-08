@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      .myCanvas {
+        background-color: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas class="myCanvas" width="600" height="400"></canvas>
+
+    <script>
+      const myCanvas = document.querySelector(".myCanvas");
+      const context = myCanvas.getContext("2d");
+
+      const moveDist = 10;
+      const radius = 50;
+
+      let dir = 1;
+      let xPos = radius;
+      let frameCount = 0;
+
+      function draw() {
+        if(frameCount % 3 === 0) {
+          context.clearRect(0, 0, 600, 400);
+
+          context.beginPath();
+          context.arc(xPos, 200, radius, 0, Math.PI * 2);
+          context.fill();
+
+          xPos += (moveDist * dir);
+          if(xPos >= (600 - radius) || xPos <= radius) {
+            dir *= -1;
+          }
+        }
+
+        frameCount++;
+        if(frameCount === 60) {
+          frameCount = 0;
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+    </script>
+  </body>
+</html>

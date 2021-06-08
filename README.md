@@ -391,4 +391,61 @@ Update 된 ``Render Tree``는 ``Repaint`` 과정이 호출되어, 실제 화면�
 
 
 
-## 09.
+## 09. Animation 프레임 설정
+
+``requestAnimationFrame(callback)`` 에는 별도의 ``Frame`` 설정 기능을 제공하지 않습니다.
+
+때문에, ``1/60 초``마다 실행되는 ``requestAnimationFrame(callback)``의 ``Frame``을 우리가 만들어야 합니다.
+
+<br/>
+
+``Frame``을 만드는 방법은 간단합니다.
+
+``requestAnimationFrame(callback)``을 호출할 때마다, ``Frame Count``를 증가 시키고, 원하는 조건의 ``Frame Count``일 때만, 재귀호출을 하도록 하면 ``Frame``이 구현 됩니다.
+
+```html
+<body>
+  <canvas class="myCanvas" width="600" height="400"></canvas>
+
+  <script>
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+
+    const moveDist = 10;
+    const radius = 50;
+
+    let dir = 1;
+    let xPos = radius;
+
+    // Frame 개수
+    let frameCount = 0;
+
+    function draw() {
+      // frameCount 가 3의 배수일 때만 다음 장면 그리기
+      if(frameCount % 3 === 0) {
+        context.clearRect(0, 0, 600, 400);
+
+        context.beginPath();
+        context.arc(xPos, 200, radius, 0, Math.PI * 2);
+        context.fill();
+
+        xPos += (moveDist * dir);
+        if(xPos >= (600 - radius) || xPos <= radius) {
+          dir *= -1;
+        }
+      }
+
+      frameCount++;
+
+      if(frameCount === 60) {
+        frameCount = 0;
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+</body>
+```
+
