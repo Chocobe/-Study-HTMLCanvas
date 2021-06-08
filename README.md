@@ -330,4 +330,65 @@ Update 된 ``Render Tree``는 ``Repaint`` 과정이 호출되어, 실제 화면�
 
 
 
-## 08.
+## 08. ``window.requestAnimationFrame()`` 를 사용한 Animation
+
+웹에서 Animation을 구현할 때는, ``window.requestAnimationFrame(callback)`` 을 사용합니다.
+
+``requestAnimationFrame(callback)`` 메서드는 Animation에 대한 최적화를 지원하기 때문에, ``window.setInterval()`` 보다 뛰어난 Animation을 구현할 수 있습니다.
+
+``requestAnimationFrame(callback)``의 특징은 다음과 같습니다.
+
+* 브라우저에 Animation 함수를 알립니다.
+* ``Repain`` 호출 전, 해당 Animation ``Callback`` 함수를 호출해 줍니다.
+* ``1/60`` 프레임의 Animation을 출력합니다.
+* Animation을 출력할 때 발생할 수 있는 ``프레임 유실`` 또는 ``버퍼링``을 해소해 줍니다.
+
+<br/>
+
+다음 코드는 ``requestAnimationFrame(callback)`` 을 사용한 Animation 구현 예제 입니다.
+
+```html
+<body>
+  <canvas class="myCanvas" width="600" height="400"></canvas>
+
+  <script>
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+
+    let dir = 1;
+    let xPos = 50;
+
+    function draw() {
+      context.clearRect(0, 0, 600, 400);
+
+      context.beginPath();
+      context.arc(xPos, 200, 50, 0, Math.PI * 2);
+      context.fill();
+
+      xPos += 10 * dir;
+
+      if(xPos >= (600 - 50) || xPos <= 50) {
+        dir *= -1;
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+</body>
+```
+
+<br/>
+
+위 코드의 실행결과는 다음과 같습니다.
+
+<img src="./readmeAssets/08-requestAnimationFrame-01.gif" width="700px" alt="gif: requestAnimationFrame 결과"><br/>
+
+
+
+<br/><hr/><br/>
+
+
+
+## 09.

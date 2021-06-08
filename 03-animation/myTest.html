@@ -8,9 +8,6 @@
 
     <style>
       .myCanvas {
-        width: 600px;
-        height: 400px;
-
         background-color: #eee;
       }
     </style>
@@ -24,40 +21,29 @@
       <button onclick="speedDown()">Speed Down</button>
     </div>
 
-    <canvas class="myCanvas" width="1200" height="800"></canvas>
+    <canvas class="myCanvas" width="600" height="400"></canvas>
 
     <script>
       const myCanvas = document.querySelector(".myCanvas");
       const context = myCanvas.getContext("2d");
 
-      let perDist = 20;
       let dir = 1;
       let xPos = 50;
 
       function draw() {
-        context.clearRect((xPos - 50) - (perDist * dir), 350, 100, 100);
-        
+        context.clearRect(0, 0, 600, 400);
+
         context.beginPath();
-        context.arc(xPos, 400, 50, 0, Math.PI * 2);
+        context.arc(xPos, 200, 50, 0, Math.PI * 2);
         context.fill();
 
-        xPos += perDist * dir;
+        xPos += 10 * dir;
 
-        if(xPos >= 1150 || xPos <= 50) {
+        if(xPos >= (600 - 50) || xPos <= 50) {
           dir *= -1;
         }
 
         requestAnimationFrame(draw);
-      }
-
-      function speedUp() {
-        perDist += 10;
-        console.log("speedUp: ", perDist);
-      }
-
-      function speedDown() {
-        perDist -= 10;
-        console.log("speedDown: ", perDist);
       }
 
       draw();
