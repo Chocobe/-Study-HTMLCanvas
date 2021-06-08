@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      .myCanvas {
+        background-color: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas class="myCanvas" width="600" height="400"></canvas>
+
+    <script>
+      const myCanvas = document.querySelector(".myCanvas");
+      const context = myCanvas.getContext("2d");
+
+      const imgElement = new Image();
+      imgElement.src = "./Kirby.png";
+
+      imgElement.addEventListener("load", () => {
+        // img 그대로 출력
+        context.drawImage(imgElement, 100, 100);
+        
+        // img 의 크기 지정
+        context.drawImage(imgElement, 400, 200, 100, 200);
+
+        // img 의 일부분 clop
+        context.drawImage(imgElement, 50, 50, 100, 100, 0, 0, 100, 100);
+      })
+    </script>
+  </body>
+</html>

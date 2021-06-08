@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      .colorBtn {
+        width: 30px;
+        height: 30px;
+        
+        border: 0;
+        border-radius: 50%;
+      }
+
+      .colorBtn[data-color="black"] {
+        background-color: #000;
+      }
+      .colorBtn[data-color="red"] {
+        background-color: #ff0000;
+      }
+      .colorBtn[data-color="green"] {
+        background-color: #00ff00;
+      }
+      .colorBtn[data-color="blue"] {
+        background-color: #0000ff;
+      }
+
+      .imgBtn {
+        width: 40px;
+        height: 40px;
+
+        background-image: url("./Kirby.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+
+      .resultImage {
+        /*  */
+      }
+
+      .myCanvas {
+        background-color: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="control">
+      <button class="colorBtn" data-type="color" data-color="black"></button>
+      <button class="colorBtn" data-type="color" data-color="red"></button>
+      <button class="colorBtn" data-type="color" data-color="green"></button>
+      <button class="colorBtn" data-type="color" data-color="blue"></button>
+      <button class="imgBtn" data-type="image"></button>  
+    </div>
+
+    <button class="saveBtn">이미지 저장</button><br/>
+
+    <br/>
+
+    <div class="resultImage"></div>
+
+    <canvas class="myCanvas" width="600" height="400"></canvas>
+
+    <script>
+      const control = document.querySelector(".control");
+      const saveBtn = document.querySelector(".saveBtn");
+      const myCanvas = document.querySelector(".myCanvas");
+      const context = myCanvas.getContext("2d");
+      const resultImage = document.querySelector(".resultImage");
+
+      let drawingMode = false;
+      let imgMode = false;
+      let brush = "color" // "color", "image"
+      let colorVal = 'black';
+
+      const imgElement = new Image();
+      imgElement.src = "./Kirby.png";
+
+      function moveHandler(event) {
+        if(!drawingMode) return;
+
+        const x = event.offsetX;
+        const y = event.offsetY;
+
+        if(brush === "color") {
+          context.fillStyle = colorVal;
+          context.beginPath();
+          context.arc(x, y, 5, 0, Math.PI * 2);
+          context.fill();
+        } else if(brush === "image") {
+          context.drawImage(imgElement, x, y, 50, 50);
+        }
+      }
+
+      function downHandler(event) {
+        drawingMode = true;
+      }
+
+      function upHandler(event) {
+        drawingMode = false;
+      }
+
+      // function changeColor(color) {
+      //   context.fillStyle = color;
+      // }
+
+      function setColor(event) {
+        const targetElement = event.target;
+        const dataType = targetElement.getAttribute("data-type");
+
+        brush = dataType;
+
+        if(dataType === "color") {
+          colorVal = targetElement.getAttribute("data-color");
+        }
+      }
+
+      function createImage() {
+        const resultImg = myCanvas.toDataURL("image/png");
+        console.log(resultImg);
+
+        const resultImgElement = new Image();
+        resultImgElement.src = resultImg;
+
+        resultImage.appendChild(resultImgElement);
+
+        const a = document.createElement("a");
+        a.download = "이미지";
+        a.href = resultImg;
+        a.style.display = "none";
+
+        control.appendChild(a);
+        a.click();
+        control.removeChild(a);
+      }
+      
+      myCanvas.addEventListener("mousedown", downHandler);
+      myCanvas.addEventListener("mousemove", moveHandler);
+      myCanvas.addEventListener("mouseup", upHandler);
+      control.addEventListener("click", setColor);
+      saveBtn.addEventListener("click", createImage);
+    </script>
+  </body>
+</html>

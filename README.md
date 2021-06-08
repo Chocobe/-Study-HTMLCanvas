@@ -510,4 +510,57 @@ Update 된 ``Render Tree``는 ``Repaint`` 과정이 호출되어, 실제 화면�
 
 
 
-## 11.
+## 11. ``<canvas>``에 ``Image`` 그리기
+
+지금까지 알아보았던 도형 그리기는 복잡한 이미지는 그리기 어렵습니다.
+
+때문에 이미지 파일을 ``<canvas>``에 그려서 사용하게 되는데, 이번에는 ``Image`` 파일을 ``<canvas>``에 그리는 방법에 대해 알아보겠습니다.
+
+<br/>
+
+``<canvas>``객체의 ``context.drawImage()`` 메서드를 사용하여, ``Image``를 그릴 수 있습니다.
+
+``context.drawImage()``에 전달할 ``Image``는 ``HTMLImageElement``로 전달하게 됩니다.
+
+``context.drawImage()``의 형식은 다음과 같습니다.
+
+* ``drawImage(imgElement, 시작x, 시작y)``
+* ``drawImage(imgElement, 시작x, 시작y, imgWidth, imgHeight)``
+* ``drawImage(imgElement, clop시작x, clop시작y, clopWidth, clopHeight, 시작x, 시작y, imgWidth, imgHeight)``
+
+위 스펙을 보면, ``Image``의 일부분을 ``Clop``할 수 있는 기능도 사용할 수 있습니다.
+
+<br/>
+
+다음 코드는 ``<canvas>``에 ``Image``를 그리는 예시 코드 입니다.
+
+```html
+<body>
+    <canvas class="myCanvas" width="600" height="400"></canvas>
+
+    <script>
+      const myCanvas = document.querySelector(".myCanvas");
+      const context = myCanvas.getContext("2d");
+
+      const imgElement = new Image();
+      imgElement.src = "./Kirby.png";
+
+      imgElement.addEventListener("load", () => {
+        // img 그대로 출력
+        context.drawImage(imgElement, 100, 100);
+        
+        // img 의 크기 지정
+        context.drawImage(imgElement, 400, 200, 100, 200);
+
+        // img 의 일부분 clop
+        context.drawImage(imgElement, 50, 50, 100, 100, 0, 0, 100, 100);
+      })
+    </script>
+  </body>
+```
+
+<br/>
+
+위 코드의 결과는 다음과 같습니다.
+
+<img src="./readmeAssets/11-draw-img-01.png" width="700px" alt="이미지: drawImage() 결과"><br/>
