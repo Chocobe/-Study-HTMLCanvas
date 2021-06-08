@@ -564,3 +564,71 @@ Update 된 ``Render Tree``는 ``Repaint`` 과정이 호출되어, 실제 화면�
 위 코드의 결과는 다음과 같습니다.
 
 <img src="./readmeAssets/11-draw-img-01.png" width="700px" alt="이미지: drawImage() 결과"><br/>
+
+
+
+<br/><hr/><br/>
+
+
+
+## 12. ``<video>`` 와 ``<canvas>``
+
+``HTML``의 ``<video>``태그를 사용하면 웹에 영상을 출력할 수 있습니다.
+
+만약, ``<video>``에 효과나 수정을 만든다면 ``<canvas>``에 ``<video>``를 그려서 구현할 수 있습니다.
+
+<br/>
+
+``<canvas>``에 ``<video>``를 그리는 방법은 이미지와 동일한 ``context.drawImage()``를 사용 합니다.
+
+``<img>`` 그리기와 차이점은 ``<video>``를 그리는 ``Event``가 다릅니다.
+
+* ``canplaythrough`` 이벤트
+
+<br/>
+
+``canplaythrough`` 이벤트는 ``<video>`` 요소에서 발생하며, 발생 시점은 사용자의 브라우저에서 ``<video>``를 버퍼링 없이 전체 재생할 수 있는 시점 입니다.
+
+<br/>
+
+아래 코드는 ``<video>``태그의 영상을 ``<canvas>``에 출력한 예시 입니다.
+
+```html
+<head>
+  <style>
+    /* <video>는 화면에 출력하지 않음 */
+    .myVideo {
+      position: absolute;
+      width: 0;
+      height: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <video src="영상" autoplay muted loop class="myVideo"></video>
+
+  <canvas class="myCanvas" width="600" height="400"></canvas>
+
+  <script>
+    const myVideo = document.querySelector(".myVideo");
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+
+    function draw() {
+      context.drawImage(myVideo, 0, 0, 600, 400);
+      requestAnimationFrame(draw);
+    }
+
+    myVideo.addEventListener("canplaythrough", draw);
+  </script>
+</body>
+```
+
+
+
+<br/><hr/><br/>
+
+
+
+## 13.

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      .myCanvas {
+        background-color: #eee;
+      }
+
+      .myVideo {
+        position: absolute;
+        width: 0;
+        height: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Video</h1>
+
+    <video class="myVideo" src="./video.mp4" autoplay muted loop></video>
+
+    <canvas class="myCanvas" width="600" height="400"></canvas>
+
+    <script>
+      const myVideo = document.querySelector(".myVideo");
+      const myCanvas = document.querySelector(".myCanvas");
+      const context = myCanvas.getContext("2d");
+
+      function draw() {
+        context.drawImage(myVideo, 0, 0, 600, 400);
+        requestAnimationFrame(draw);
+      }
+
+      myVideo.addEventListener("canplaythrough", draw);
+
+      // const myCanvas = document.querySelector(".myCanvas");
+      // const context = myCanvas.getContext("2d");
+      // let canPlayState = false;
+
+      // context.textAlign = "center";
+      // context.fillText("비디오 로딩 중..", 300, 200);
+
+      // const videoElement = document.querySelector(".myVideo");
+      // videoElement.addEventListener("canplaythrough", render);
+
+      // function render() {
+      //   context.drawImage(videoElement, 0, 0, 600, 400);
+      //   requestAnimationFrame(render);
+      // }
+    </script>
+  </body>
+</html>
