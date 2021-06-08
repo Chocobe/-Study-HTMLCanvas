@@ -449,3 +449,65 @@ Update 된 ``Render Tree``는 ``Repaint`` 과정이 호출되어, 실제 화면�
 </body>
 ```
 
+
+
+<br/><hr/><br/>
+
+
+
+## 10. ``requestAnimationFrame()`` 정지 시키기
+
+``requestAnimationFrame(callback)`` 메서드는 반환값으로 ``requestAnimationFrame() 식별 ID``를 줍니다.
+
+만약 ``requestAnimationFrame(callback)``을 정지 시키려면, ``window.cancelAnimationFrame(식별ID)``를 사용하여 정지 시킬 수 있습니다.
+
+다음은 ``<canvas>`` 클릭 시, Animation을 정지 시키는 예시 코드 입니다.
+
+```html
+<body>
+  <canvas class="myCanvas" width="600" height="400" onclick="stopAnimation()"</canvas>
+
+  <script>
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+
+    const radius = 50;
+    const moveDist = 10;
+
+    let dir = 1;
+    let xPos = radius;
+
+    let animationId = -9999;
+
+    function draw() {
+      context.clearRect(0, 0, 600, 400);
+
+      context.beginPath();
+      context.arc(xPos, 200, radius, 0, Math.PI * 2);
+      context.fill();
+
+      xPos += (radius * dir);
+
+      if(xPos >= (600 - radius) || xPos <= radius) {
+        dir *= -1;
+      }
+
+      animationId = requestAnimationFrame(draw);
+    }
+
+    function stopAnimation() {
+      cancelAnimationFrame(animationId);
+    }
+
+    draw();
+  </script>
+</body>
+```
+
+
+
+<br/><hr/><br/>
+
+
+
+## 11.

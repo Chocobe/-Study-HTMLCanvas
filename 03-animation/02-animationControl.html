@@ -14,7 +14,7 @@
   </head>
 
   <body>
-    <canvas class="myCanvas" width="600" height="400"></canvas>
+    <!-- <canvas class="myCanvas" width="600" height="400"></canvas>
 
     <script>
       const myCanvas = document.querySelector(".myCanvas");
@@ -50,6 +50,44 @@
       }
 
       draw();
-    </script>
+    </script> -->
+
+    <canvas class="myCanvas" width="600" height="400" onclick="stopAnimation()"</canvas>
+
+      <script>
+        const myCanvas = document.querySelector(".myCanvas");
+        const context = myCanvas.getContext("2d");
+    
+        const radius = 50;
+        const moveDist = 10;
+    
+        let dir = 1;
+        let xPos = radius;
+    
+        let animationId = -9999;
+    
+        function draw() {
+          context.clearRect(0, 0, 600, 400);
+    
+          context.beginPath();
+          context.arc(xPos, 200, radius, 0, Math.PI * 2);
+          context.fill();
+    
+          xPos += (moveDist * dir);
+    
+          if(xPos >= (600 - radius) || xPos <= radius) {
+            dir *= -1;
+          }
+    
+          animationId = requestAnimationFrame(draw);
+        }
+    
+        function stopAnimation() {
+          console.log("클릭함: animationId: ", animationId);
+          window.cancelAnimationFrame(animationId);
+        }
+    
+        draw();
+      </script>
   </body>
 </html>
