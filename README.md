@@ -298,4 +298,36 @@
 
 
 
-## 07.
+## 07. 브라우저 Rendering 과정
+
+다음 챕터에서 알아볼 Animation을 위해, 브라우저의 Rendering 방식에 대해 알아보겠습니다.
+
+웹 페이지는 ``HTML`` 파일과 ``CSS`` 파일에 의해 화면을 출력 합니다.
+
+<br/>
+
+브라우저는 ``HTML`` 파일을 해석한 ``DOM Tree``와 ``CSS`` 파일을 해석한 ``Style Rule``을 사용하여 ``Render Tree``를 만듭니다.
+
+만들어진 ``Render Tree``는 화면에 실제로 보이는 요소와 스타일만 가진 결과물이며, ``Print`` 과정에 의해 화면에 최초 출력 됩니다.
+
+<br/>
+
+이제 화면에 변화가 생기면, ``Reflow`` 과정이 호출되고, ``Reflow`` 과정에 의해 변경된 ``Render Tree``가 Update 됩니다.
+
+<br/>
+
+Update 된 ``Render Tree``는 ``Repaint`` 과정이 호출되어, 실제 화면이 변경되게 됩니다.
+
+<br>
+
+이러한 과정을 도식화 하면 다음과 같습니다.
+
+<img src="./readmeAssets/07-browser-rendering-01.png" alt="이미지: Browser Rendering 도식화" width="700px"><br/>
+
+
+
+<br/><hr/><br/>
+
+
+
+## 08.

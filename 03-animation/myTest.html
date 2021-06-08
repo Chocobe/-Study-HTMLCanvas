@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      .myCanvas {
+        width: 600px;
+        height: 400px;
+
+        background-color: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>테스트</h1>
+
+    <div>
+      <button onclick="speedUp()">Speed Up</button>
+      <button onclick="speedDown()">Speed Down</button>
+    </div>
+
+    <canvas class="myCanvas" width="1200" height="800"></canvas>
+
+    <script>
+      const myCanvas = document.querySelector(".myCanvas");
+      const context = myCanvas.getContext("2d");
+
+      let perDist = 20;
+      let dir = 1;
+      let xPos = 50;
+
+      function draw() {
+        context.clearRect((xPos - 50) - (perDist * dir), 350, 100, 100);
+        
+        context.beginPath();
+        context.arc(xPos, 400, 50, 0, Math.PI * 2);
+        context.fill();
+
+        xPos += perDist * dir;
+
+        if(xPos >= 1150 || xPos <= 50) {
+          dir *= -1;
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      function speedUp() {
+        perDist += 10;
+        console.log("speedUp: ", perDist);
+      }
+
+      function speedDown() {
+        perDist -= 10;
+        console.log("speedDown: ", perDist);
+      }
+
+      draw();
+    </script>
+  </body>
+</html>
