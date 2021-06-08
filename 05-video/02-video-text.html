@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      .myVideo {
+        position: absolute;
+        width: 0;
+        height: 0;
+      }
+
+      .myCanvas {
+        background-color: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Video와 Text</h1>
+
+    <video src="./video.mp4" autoplay muted loop class="myVideo"></video>
+
+    <canvas class="myCanvas" width="600" height="400"></canvas>
+
+    <script>
+      const myVideo = document.querySelector(".myVideo");
+      const myCanvas = document.querySelector(".myCanvas");
+      const context = myCanvas.getContext("2d");
+
+      context.font = "bold 50px san-serif";
+      context.fillStyle = "#ff0000";
+
+      const msgList = [
+        { msg: "1. 자막 입니다", time: 1, x: 100, y: 50 },
+        { msg: "2. Hello World", time: 2, x: 200, y: 100 },
+        { msg: "3. 안녕하세요", time: 3, x: 300, y: 200 },
+      ]
+
+      function draw() {
+        context.drawImage(myVideo, 0, 0, 600, 400);
+
+        const currentTime = myVideo.currentTime;
+
+        for(let i = 0; i < msgList.length; i++) {
+          const msgObj = msgList[i];
+
+          if(currentTime >= msgObj.time) {
+            context.fillText(msgObj.msg, msgObj.x, msgObj.y);
+          }
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      myVideo.addEventListener("canplaythrough", draw);
+    </script>
+  </body>
+</html>

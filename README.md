@@ -631,4 +631,77 @@ Update 된 ``Render Tree``는 ``Repaint`` 과정이 호출되어, 실제 화면�
 
 
 
-## 13.
+## 13. ``<video>`` 자막넣기
+
+``<video>``를 ``<canvas>``에 그리게 되면, 자막처럼 효과를 추가할 수 있습니다.
+
+자막을 달기 위해서는 ``<video>``의 ``현재 재생시간``을 알아야 하는데, 이는 ``HTMLVideoElement.currentTime`` 속성으로 얻을 수 있습니다.
+
+``HTMLVideoElement.currentTime``의 값은 ``초 단위`` Number 이며, 소수점까지 알 수 있습니다.
+
+<br/>
+
+다음은 시간별로 자막을 추가한 예시 코드 입니다.
+
+```html
+<head>
+  <style>
+    .myVideo {
+      position: absolute;
+      width: 0;
+      height: 0;
+    }
+
+    .myCanvas {
+      background-color: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <video class="myVideo" autoplay muted loop src="영상"></video>
+
+  <canvas class="myCanvas" width="600" height="400"></canvas>
+
+  <script>
+    const myVideo = document.querySelector(".myVideo");
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+
+    context.font = "bold 50px san-serif";
+    context.fillStyle = "#ff0000";
+
+    const msgList = [
+      { msg: "1. 자막 입니다", time: 1, x: 100, y: 50 },
+      { msg: "2. Hello World", time: 2, x: 200, y: 100 },
+      { msg: "3. 안녕하세요", time: 3, x: 300, y: 200 },
+    ]
+
+    function draw() {
+      context.drawImage(myVideo, 0, 0, 600, 400);
+
+      const currentTime = myVideo.currentTime;
+
+      for(let i = 0; i < msgList.length; i++) {
+        const msgObj = msgList[i];
+
+        if(currentTime >= msgObj.time) {
+          context.fillText(msgObj.msg, msgObj.x, msgObj.y);
+        }
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    myVideo.addEventListener("canplaythrough", draw);
+  </script>
+</body>
+```
+
+
+
+<br/><hr/><br/>
+
+
+
+## 14. 
