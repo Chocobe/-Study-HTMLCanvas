@@ -834,4 +834,394 @@ const imageData: {
 
 
 
-## 15. 
+## 15. ``canvas``의 ``save()`` 와 ``restore()``
+
+``<canvas>``에도 변화기능이 있습니다.
+
+모양, 크기, 색 등 다양한 변화를 줄 수 있습니다.
+
+<br/>
+
+``transform`` 기능을 알아보기 전에, 먼저 ``<canvas>``의 상태를 저장하고 불러오는 기능에 대해 알아 보겠습니다.
+
+<br/>
+
+``<canvas>``의 ``context``에는 ``save()`` 메서드와 ``restore()`` 메서드가 있습니다.
+
+``save()`` 메서드는 현재 ``<canvas>``의 상태를 ``Stack``에 저장 합니다.
+
+``save()`` 메서드로 저장된 ``<canvas>``의 상태는 ``restore()`` 메서드로 불러올 수 있습니다.
+
+중요한 점은 ``save()`` 와 ``restore()``는 ``Stack`` 방식으로 동작한다는 것입니다.
+
+<br/>
+
+다음은 ``save()`` 와 ``restore()`` 에 대한 예시 입니다.
+
+```html
+<head>
+  <style>
+    .myCanvas {
+      background-color: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas class="myCanvas" width="500" height="500"></canvas>
+
+  <script>
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+
+    context.fillRect(0, 0, 200, 200);
+
+    // <canvas> 상태 저장
+    context.save();
+
+    context.fillStyle = "orange";
+    context.fillRect(100, 100, 200, 200);
+
+    // <canvas> 상태 저장
+    context.save();
+
+    context.fillStyle = "pink";
+    context.beginPath();
+    context.arc(250, 250, 50, 0, Math.PI * 2);
+    context.fill();
+
+    // Stack에서 <canvas> 상태 불러오기 "orange"
+    context.restore();
+
+    context.beginPath();
+    context.arc(300, 300, 25, 0, Math.PI * 2);
+    context.fill();
+
+    // Stack에서 <canvas> 상태 불러오기 "black"
+    context.restore();
+
+    context.beginPath();
+    context.arc(300, 300, 100, 0, Math.PI * (2 / 4));
+    context.lineTo(300, 300);
+    context.fill();
+  </script>
+</body>
+```
+
+<br/>
+
+위 코드를 실행하면 다음과 같은 결과를 얻을 수 있습니다.
+
+<img src="./readmeAssets/15-transform-01.png" width="400px" alt="이미지: save() restore() 결과"><br/>
+
+
+
+<br/><hr/><br/>
+
+
+
+## 16. ``<canvas>``의 ``transform``
+
+``<canvas>`` 의 ``transform`` 에는 다음 3가지 기능이 있습니다.
+
+1. ``translate(x좌표, y좌표)``: Canvas의 ``원점 이동`` 메서드 입니다.
+2. ``rotate(각도)``: 원점을 기준으로 ``회전`` 시키는 메서드 입니다.
+3. ``scale(수평 배율, 수직 배율)``: Canvas의 ``그리드 단위``를 키우거나 줄이는 메서드 입니다.
+
+<br/>
+
+위 3가지 메서드에 대한 예시 코드는 다음과 같습니다.
+
+```html
+<head>
+  <style>
+    .myCanvas {
+      background-color: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas class="myCanvas" width="500" height="500"></canvas>
+
+  <script>
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+
+    function draw() {
+      context.clearRect(0, 0, 500, 500);
+      
+      context.fillRect(0, 0, 200, 200);
+      context.translate(10, 0);
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+</body>
+```
+
+<br/>
+
+위 코드를 실행하면, 도형을 그리는 x 좌표가 변하는 것을 알 수 있습니다.
+
+<img src="./readmeAssets/16-transform-01.gif" alt="gif: transform 결과" width="500px"><br/>
+
+<br/>
+
+하지만, 의도했던 도형이 움직이는 Animation이 아닌, 줄을 긋는 Animation 처럼 되었습니다.
+
+이유는 ``transform()`` 메서드는 ``canvas``의 ``원점``을 이동 시키므로, ``clearRect(0, 0, 500, 500)`` 의 좌표가 ``transform()`` 이 적용된 후의 ``(0, 0)``을 지우기 때문에, ``transform()`` 이전 위치를 지우지 못하기 때문입니다.
+
+<br/>
+
+다음은 ``rotate(각도)`` 메서드의 예시 코드 입니다.
+
+```html
+<head>
+  <style>
+    .myCanvas {
+      background-color: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas class="myCanvas" width="500" height="500"></canvas>
+
+  <script>
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+
+    function toRadius(deg) {
+      return deg * (Math.PI / 180);
+    }
+
+    function draw() {
+      context.fillRect(50, 50, 50, 50);
+      context.rotate(toRadius(1));
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+</body>
+```
+
+<br/>
+
+위 코드를 실행한 결과는 다음과 같습니다.
+
+<img src="./readmeAssets/16-transform-02.gif" alt="gif: rotate() 결과" width="500px"><br/>
+
+<br/>
+
+``rotate()`` 예제 역시, 우리가 의도했던 사각형의 회전이 아닌, ``원점``을 중심으로 사격형이 회전하고 있습니다.
+
+<br/>
+
+마지막으로 ``scale(x배율, y배율)`` 에 대한 예시 코드 입니다.
+
+```html
+<head>
+  <style>
+    .myCanvas {
+      background-color: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas class="myCanvas" width="500" height="500"></canvas>
+
+  <script>
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+
+    function draw() {
+      context.clearRect(0, 0, 500, 500);
+
+      context.fillRect(200, 200, 200, 200);
+      context.scale(1.01, 1.01);
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+</body>
+```
+
+<br/>
+
+위 코드를 실행해 보면, 다음과 같습니다.
+
+<img src="./readmeAssets/16-transform-03.gif" alt="gif: scale() 결과" width="500px"><br/>
+
+<br/>
+
+``rotate(x배율, y배율)`` 메서드 역시, ``원점(0, 0)``을 기준으로 커지는 문제가 있습니다.
+
+<br/>
+
+지금까지의 문제점은 모두 ``transform의 기준점``에 대한 문제 입니다.
+
+``<canvas>``의 모든 ``transform`` 메서드는 ``기준점``에서 동작되는데, 이 기준점의 위치를 변경하거나 ``초기화(원점)`` 를 필요에 따라 적용시켜야 합니다.
+
+``기준점``의 초기화는 ``context.resetTransform()`` 메서드를 사용하여 실행할 수 있습니다.
+
+``transform`` 메서드는 현재 ``기준점``에서 반영되므로, 절대좌표로써 ``transform``을 적용 시키려면, ``resetTransform()`` 을 호출 후 변형을 시켜야 합니다.
+
+<br/>
+
+그리고 ``transform``을 일괄 적용 시킬 수 있는 메서드는 다음 두가지가 있습니다.
+
+1. ``transform(a, b, c, d, e, f)`` 
+2. ``setTransform(a, b, c, d, e, f)`` 
+
+위 두 메서드는 ``행렬`` 연상방법을 사용하며, ``transform`` 전체를 일괄 적용 시킬 수 있는 메서드 입니다.
+
+``transform()`` 메서드는 현재 상태에서 ``transform``을 적용 시키고, ``setTransform()`` 메서드는 현재 ``transform``을 ``초기화`` 한 후, 적용 시키는 차이가 있습니다.
+
+<br/>
+
+마지막으로 ``setTransform(1, 0, 0, 1, 0, 0)``을 호출하게 되면, 행열 연산에 의해 ``resetTransform()`` 과 동일하게 ``초기화`` 동작이 됩니다.
+
+<br/>
+
+그럼 지금까지 예시의 문제점을 개선한 방법으로 코딩해 보겠습니다.
+
+```html
+<head>
+  <style>
+    .myCanvas {
+      background-color: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas class="myCanvas" width="500" height="500"></canvas>
+
+  <script>
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+
+    // 프레임당 이동 거리
+    const translateUnit = 10;
+    // 이동 방향
+    let translateDir = 1;
+    // 현재 x축 위치
+    let curX = 0;
+
+    // 이동하는 사각형 그리기 메서드
+    function drawTranslateRect() {
+      context.translate(curX, 0);
+
+      context.fillRect(0, 0, 100, 100);
+
+      curX += translateUnit * translateDir;
+
+      if(curX >= 400) {
+        translateDir = -1;
+      } else if(curX <= 0) {
+        translateDir = 1;
+      }
+    }
+
+    // 프레임당 회전 단위
+    const rotateUnit = Math.PI / 180 * 3;
+    // 현재 회전 각도
+    let curDeg = 0;
+
+    // 회전하는 사각형 그리기 메서드
+    function drawRotateRect() {
+      context.translate(250, 250);
+      context.rotate(curDeg);
+
+      // translate() 가 적용된 원점에서 (-50, -50) 위치에 사각형 그리기
+      context.fillRect(-50, -50, 100, 100);
+
+      curDeg += rotateUnit;
+
+      if(curDeg >= 360) {
+        curDeg = 0;
+      }
+    }
+
+    // 프레임당 배율
+    const scaleUnit = 0.005;
+    // 배율 방향
+    let scaleDir = 1;
+    // 현재 배율
+    let curScale = 1;
+
+    // 배율 사각형 그리기 메서드
+    function drawScaleRect() {
+      context.translate(250, 400);
+      context.scale(curScale, curScale);
+
+      context.strokeRect(-50, -50, 100, 100);
+
+      curScale += scaleUnit * scaleDir;
+
+      if(curScale >= 1.5) {
+        scaleDir = -1;
+      } else if(curScale <= 1) {
+        scaleDir = 1;
+      }
+    }
+
+    // Animation Frame
+    let frame = 0;
+
+    function draw() {
+      if(frame % 3 === 0) {
+        // 이전 transform 상태값 초기화
+        context.resetTransform();
+        context.clearRect(0, 0, myCanvas.width, myCanvas.height);
+
+        drawTranslateRect();
+
+        // 이전 transform 상태값 초기화
+        context.resetTransform();
+        drawRotateRect();
+
+        // 이전 transform 상태값 초기화
+        context.resetTransform();
+        drawScaleRect();
+      }
+
+      frame++;
+
+      if(frame >= 60) {
+        frame = 0;
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+</body>
+```
+
+<br/>
+
+<img src="./readmeAssets/16-transform-04.gif" alt="gif: transform 문제점 수정 결과" width="500px"><br/>
+
+<br/>
+
+위 코드의 가장 큰 특징은, 각 도형을 그릴 때, 이전 ``transform`` 상태값을 ``resetTransform()`` 메서드로 초기화 한 후, 각 도형에 맞게 ``transform`` 을 변경한다는 점 입니다.
+
+``transform`` 은 현재 상태에서 변형 시키는 기능이기 때문에, 매번 초기화를 해 줘야 ``상태의 절대값``으로 작성할 수 있기 때문입니다.
+
+
+
+<br/><hr/><br/>
+
+
+
+## 17.

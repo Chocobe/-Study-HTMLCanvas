@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      .myCanvas {
+        background-color: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas class="myCanvas" width="500" height="500"></canvas>
+
+    <script>
+      const myCanvas = document.querySelector(".myCanvas");
+      const context = myCanvas.getContext("2d");
+
+      // 프레임당 이동 거리
+      const translateUnit = 10;
+      // 이동 방향
+      let translateDir = 1;
+      // 현재 x축 위치
+      let curX = 0;
+
+      // 이동하는 사각형 그리기 메서드
+      function drawTranslateRect() {
+        context.translate(curX, 0);
+
+        context.fillRect(0, 0, 100, 100);
+
+        curX += translateUnit * translateDir;
+
+        if(curX >= 400) {
+          translateDir = -1;
+        } else if(curX <= 0) {
+          translateDir = 1;
+        }
+      }
+
+      // 프레임당 회전 단위
+      const rotateUnit = Math.PI / 180 * 3;
+      // 현재 회전 각도
+      let curDeg = 0;
+
+      // 회전하는 사각형 그리기 메서드
+      function drawRotateRect() {
+        context.translate(250, 250);
+        context.rotate(curDeg);
+
+        // translate() 가 적용된 원점에서 (-50, -50) 위치에 사각형 그리기
+        context.fillRect(-50, -50, 100, 100);
+
+        curDeg += rotateUnit;
+
+        if(curDeg >= 360) {
+          curDeg = 0;
+        }
+      }
+
+      // 프레임당 배율
+      const scaleUnit = 0.005;
+      // 배율 방향
+      let scaleDir = 1;
+      // 현재 배율
+      let curScale = 1;
+
+      // 배율 사각형 그리기 메서드
+      function drawScaleRect() {
+        context.translate(250, 400);
+        context.scale(curScale, curScale);
+
+        context.strokeRect(-50, -50, 100, 100);
+
+        curScale += scaleUnit * scaleDir;
+
+        if(curScale >= 1.5) {
+          scaleDir = -1;
+        } else if(curScale <= 1) {
+          scaleDir = 1;
+        }
+      }
+
+      // Animation Frame
+      let frame = 0;
+
+      function draw() {
+        if(frame % 3 === 0) {
+          context.resetTransform();
+          context.clearRect(0, 0, myCanvas.width, myCanvas.height);
+
+          drawTranslateRect();
+
+          context.resetTransform();
+          drawRotateRect();
+
+          context.resetTransform();
+          drawScaleRect();
+        }
+
+        frame++;
+
+        if(frame >= 60) {
+          frame = 0;
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      draw();
+    </script>
+  </body>
+</html>
