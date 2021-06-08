@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      .myVideo {
+        position: absolute;
+        width: 0;
+        height: 0;
+      }
+
+      .myCanvas {
+        background-color: #eee;
+      }
+
+      .controller {
+        margin: 20px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <video class="myVideo" src="./video.mp4" autoplay muted loop></video>
+
+    <canvas class="myCanvas" width="600" height="400"></canvas>
+
+    <div class="controller">
+      <button data-color="red">R</button>
+      <button data-color="green">G</button>
+      <button data-color="blue">B</button>
+      <button data-color="transparent">Reset</button>
+    </div>
+
+    <script>
+      const myVideo = document.querySelector(".myVideo");
+      const myCanvas = document.querySelector(".myCanvas");
+      const context = myCanvas.getContext("2d");
+      const controller = document.querySelector(".controller");
+
+      let colorVal = "";
+
+      function draw() {
+        context.drawImage(myVideo, 0, 0, 600, 400);
+
+        const imageData = context.getImageData(0, 0, 600, 400);
+        const pixelData = imageData.data;
+        const pixelLength = pixelData.length;
+
+        for(let i = 0; i < pixelLength; i++) {
+          switch(colorVal) {
+            case "red": {
+              // "r" 의 값을 255로 변경
+              pixelData[i * 4 + 0] = 255;
+              break;
+            }
+
+            case "green": {
+              // "g" 의 값을 255로 변경
+              pixelData[i * 4 + 1] = 255;
+              break;
+            }
+
+            case "blue": {
+              // "b" 의 값을 255로 변경
+              pixelData[i * 4 + 2] = 255;
+              break;
+            }
+          }
+        }
+
+        // 변경한 imageData 적용
+        context.putImageData(imageData, 0, 0);
+        requestAnimationFrame(draw);
+      }
+
+      myVideo.addEventListener("canplaythrough", draw);
+
+      controller.addEventListener("click", (event) => {
+        const targetElement = event.target;
+        colorVal = targetElement.getAttribute("data-color");
+      });
+    </script>
+  </body>
+</html>

@@ -704,4 +704,134 @@ Update 된 ``Render Tree``는 ``Repaint`` 과정이 호출되어, 실제 화면�
 
 
 
-## 14. 
+## 14. ``canvas``의 ``pixel`` 색 변경
+
+``<canvas>``는 ``Pixel``단위로 색을 변경할 수 있습니다.
+
+각 ``Pixel``의 색상값을 가져오기 위해서는 ``context.getImageData(시작x, 시작y, width, height)`` 메서드를 사용하여 가져올 수 있습니다.
+
+```javascript
+const myCanvas = document.querySelector(".myCanvas");
+const context = myCanvas.getContext("2d");
+
+const imageData = context.getImageData(0, 0, 600, 400);
+```
+
+<br/>
+
+위 예시는 ``(0, 0) ~ (600, 400)`` 영역의 ``image data``를 가져온 것입니다.
+
+``가져온 imageData``는 다음과 같은 객체 입니다.
+
+```typescript
+const imageData: {
+  // imageData 영역의 width값
+  width: number;
+
+  // imageData 영역의 height값
+  height: number;
+
+  // imageData 영역의 pixel별 색상값
+  data: number[];
+} = [];
+```
+
+<br/>
+
+그리고 각 ``Pixel``의 실제 ``색상값``은 ``data`` 속성으로 얻게 됩니다.
+
+``data`` 속성은 ``number[]`` 타입인데, 값 4개씩 짝으로 ``rgba``의 값을 나타냅니다.
+
+즉, ``data[0]``의 값은 ``0번 Pixel의 r값``을 나타냅니다.
+
+<br/>
+
+현재 출력된 ``<canvas>``의 Pixel 단위 색상을 변경할 때는 ``imageData.data``를 수정하여 구현할 수 있고,
+
+변경한 ``imageData.data``를 적용 시키기 위해서는 ``context.putImageData()`` 메서드를 호출해야 반영 됩니다.
+
+<br/>
+
+다음은 ``<canvas>``에 재생되는 영상의 버튼별로 변경하는 예제 입니다.
+
+```html
+<head>
+  <style>
+    .myVideo {
+      position: absolute;
+      width: 0;
+      height: 0;
+    }
+
+    .myCanvas {
+      background-color: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <video src="영상" autoplay muted loop class="myVideo"></video>
+
+  <canvas class="myCanvas" width="600" height="400"></canvas>
+
+  <div class="controller">
+    <button data-color="red">R</button>
+    <button data-color="green">G</button>
+    <button data-color="blue">B</button>
+    <button data-color="">RESET</button>
+  </div>
+
+  <script>
+    const myVideo = document.querySelector(".myVideo");
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+
+    let colorVal = "";
+
+    function draw() {
+      context.drawImage(myVideo, 0, 0, 600, 400);
+
+      const imageData = context.getImageData(0, 0, 600, 400);
+      const pixelData = imageData.data;
+      const pixelLength = pixelData.length;
+
+      for(let i = 0; i < pixelLength; i++;) {
+        switch(colorVal) {
+          case "red": {
+            pixelData[i * 4 + 0] = 255;
+            break;
+          }
+
+          case "green": {
+            pixelData[i * 4 + 1] = 255;
+            break;
+          }
+
+          case "blue": {
+            pixelData[i * 4 + 2] = 255;
+            break;
+          }
+        }
+      }
+
+      context.putImageData(imageData, 0, 0);
+      requestAnimationFrame(draw);
+    }
+
+    myVideo.addEventListener("canplaythrough", draw);
+
+    controller.addEventListener("click", (event) => {
+      const targetElement = event.target;
+      colorVal = targetElement.getAttribute("data-color");
+    });
+  </script>
+</body>
+```
+
+
+
+<br/><hr/><br/>
+
+
+
+## 15. 
