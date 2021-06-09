@@ -1224,4 +1224,185 @@ const imageData: {
 
 
 
-## 17.
+## 17. ``<canvas>``의 ``click`` 이벤트
+
+``<canvas>``에 출력된 특정 부분에 Event 기능을 만들면, interaction 기능을 만들 수 있습니다.
+
+문제는 ``<canvas>``는 이미지로 출력되기 때문에, 특정 부분을 접근할 방법이 ``좌표값`` 뿐입니다.
+
+따라서, 특정 영역에 ``click 이벤트``를 등록 하려면 다음과 같은 과정으로 구현할 수 있습니다.
+
+1. ``<canvas>`` 요소에 ``click`` 이벤트 등록
+2. ``Event Listener`` 에서 ``특정 요소 좌표`` 와 ``클릭한 좌표``를 대조하여, 조건에 따라 동작
+
+<br/>
+
+``HTML``에서 ``Event``는 ``선택자``를 사용하여 편리한 처리가 가능했지만, ``<canvas>``는 직접 ``좌표``를 처리해야 하므로 비교적 어려움이 있습니다.
+
+다음은 사각형 영역을 클릭 했을 때, 사각형의 색깔이 바뀌는 ``Event`` 예시 코드 입니다.
+
+```html
+<head>
+  <style>
+    .myCanvas {
+      background-color: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas class="myCanvas" width="500" height="500"></canvas>
+
+  <script>
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+    const colorList = ["green", "yellow"];
+
+    let count = 0;
+
+    context.fillStyle = colorList[count];
+    context.fillRect(200, 200, 100, 100);
+
+    function clickHandler(event) {
+      const x = event.offsetX;
+      const y = event.offsetY;
+
+      if(x >= 200 && x <= (200 + 100) && y >= 200 && y <= (200 + 100)) {
+        count++;
+        context.fillStyle = colorList[count % 2];
+        context.fillRect(200, 200, 100, 100);
+      }
+    }
+
+    myCanvas.addEventListener("click", clickHandler);
+  </script>
+</body>
+```
+
+<br/>
+
+<img src="./readmeAssets/17-event-01.gif" alt="gif: click 이벤트 결과" width="500px"><br/>
+
+<br/>
+
+아래 코드는 복수의 Box에 ``Click Event``까지 응용한 예시 입니다.
+
+```html
+<head>
+  <style>
+    .myCanvas {
+      background-color: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas class="myCanvas" width="500" height="500"></canvas>
+
+  <script>
+    const myCanvas = document.querySelector(".myCanvas");
+    const context = myCanvas.getContext("2d");
+    context.font = "bold 30px san-serif";
+
+    const boxes = [];
+    
+    class Box {
+      constructor(id, x, y, speed) {
+        this.id = id;
+        
+        this.x = x;
+        this.y = y;
+
+        this.width = 100;
+        this.height = 100;
+
+        this.speed = speed;
+
+        this.initColor();
+        this.draw();
+      }
+
+      draw() {
+        context.fillStyle = this.color;
+        context.fillRect(this.x, this.y, this.width, this.height);
+
+        context.fillStyle = "#fff";
+        context.fillText(this.id, (this.x + this.width / 2), (this.y + this.height / 2));
+      }
+
+      initColor() {
+        this.color = `rgba(
+          ${Math.floor(Math.random() * 256)},
+          ${Math.floor(Math.random() * 256)},
+          ${Math.floor(Math.random() * 256)},
+          0.5
+        )`;
+      }
+    }
+
+    let tempX = 0;
+    let tempY = 0;
+    let tempSpeed = 0;
+
+    // Box 생성
+    for(let i = 0; i < 10; i++) {
+      tempX = Math.floor(Math.random() * 400);
+      tempY = Math.floor(Math.random() * 400);
+      tempSpeed = Math.floor(Math.random() * 5 + 1);
+
+      boxes.push(new Box(i, tempX, tempY, tempSpeed));
+    }
+
+    function render() {
+      context.clearRect(0, 0, myCanvas.width, myCanvas.height);
+      
+      let curBox = null;
+
+      for(let i = 0; i < boxes.length; i++) {
+        context.resetTransform();
+        
+        curBox = boxes[i];
+
+        curBox.x += curBox.speed;
+        curBox.draw();
+
+        if(curBox.x >= myCanvas.width) {
+          curBox.x = -curBox.width;
+        }
+      }
+
+      requestAnimationFrame(render);
+    }
+
+    render();
+
+    // myCanvas 이벤트 등록
+    myCanvas.addEventListener("click", event => {
+      const x = event.offsetX;
+      const y = event.offsetY;
+
+      let curBox = null;
+      let selectedBox = null;
+
+      for(let i = 0; i < boxes.length; i++) {
+        curBox = boxes[i];
+
+        if(x >= curBox.x && 
+            x <= (curBox.x + curBox.width) &&
+            y >= curBox.y &&
+            y <= (curBox.y + curBox.height)) {
+          selectedBox = curBox;
+        }
+      }
+
+      if(selectedBox) {
+        console.log(`${selectedBox.id} 선택 !!`);
+      }
+    });
+  </script>
+</body>
+```
+
+<br/>
+
+<img src="./readmeAssets/17-event-02.gif" alt="gif: click 이벤트 결과" width="500px"><br/>

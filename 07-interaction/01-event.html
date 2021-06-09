@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      .myCanvas {
+        background-color: #eee;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <canvas class="myCanvas" width="500" height="500"></canvas>
+
+    <script>
+      const myCanvas = document.querySelector(".myCanvas");
+      const context = myCanvas.getContext("2d");
+
+      context.fillRect(200, 200, 100, 100);
+
+      function clickHandler(event) {
+        const x = event.offsetX;
+        const  y = event.offsetY;
+
+        // console.log(`(${x}, ${y})`);
+
+        if(x >= 200 && x <= 300 && y >= 200 && y <= 300) {
+          console.log("대상 클릭 !!");
+        }
+      }
+      
+      myCanvas.addEventListener("click", clickHandler);
+    </script>
+  </body>
+</html>

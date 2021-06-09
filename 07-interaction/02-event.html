@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      .myCanvas {
+        background-color: #eee;
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas class="myCanvas" width="500" height="500"></canvas>
+
+    <script>
+      const mousePos = {
+        x: 0,
+        y: 0,
+      };
+      
+      const myCanvas = document.querySelector(".myCanvas");
+      const context = myCanvas.getContext("2d");
+      context.font = "bold 30px san-serif";
+
+      const boxes = [];
+
+      class Box {
+        constructor(index, x, y, speed) {
+          this.index = index;
+
+          this.x = x;
+          this.y = y;
+
+          this.width = 100;
+          this.height = 100;
+
+          this.speed = speed;
+
+          this.draw();
+        }
+
+        draw() {
+          context.fillStyle = "rgba(0, 0, 0, 0.5)";
+          context.fillRect(this.x, this.y, 100, 100);
+
+          context.fillStyle = "#fff";
+          context.fillText(this.index, this.x + 30, this.y + 30);
+        }
+      }
+
+      function render() {
+        context.clearRect(0, 0, myCanvas.width, myCanvas.height);
+
+        let curBox = null;
+        for(let i = 0; i < boxes.length; i++) {
+          curBox = boxes[i];
+          curBox.x += curBox.speed;
+
+          if(curBox.x > myCanvas.width) {
+            curBox.x = -curBox.width;
+          }
+          
+          curBox.draw();
+        }
+
+        requestAnimationFrame(render);
+      }
+
+      for(let i = 0; i < 10; i++) {
+        const ranX = Math.floor(Math.random() * myCanvas.width * 0.8);
+        const ranY = Math.floor(Math.random() * myCanvas.height * 0.8);
+        const ranSpeed = Math.floor(Math.random() * 4 + 1);
+
+        const box = new Box(i, ranX, ranY, ranSpeed);
+        boxes.push(box);
+      }
+
+      myCanvas.addEventListener("click", event => {
+        mousePos.x = event.offsetX;
+        mousePos.y = event.offsetY;
+
+        let curBox = null;
+        let selectedBox = null;
+        for(let i = 0; i < boxes.length; i++) {
+          curBox = boxes[i];
+
+          if(mousePos.x >= curBox.x && 
+              mousePos.x <= (curBox.x + curBox.width) && 
+              mousePos.y >= curBox.y && 
+              mousePos.y <= (curBox.y + curBox.height)
+          ) {
+            selectedBox = curBox;
+          }
+        }
+
+        if(selectedBox) {
+          console.log(`${selectedBox.index} Box 클릭 ~!!`);
+        }
+      });
+
+      render();
+    </script>
+  </body>
+</html>
