@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>호 (arc)</title>
+    
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body onload="draw();">
+    <canvas id="tutorial" width="150" height="200"></canvas>
+
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+
+      /** @type { CanvasRenderingContext2D } */
+      const ctx = canvas.getContext("2d");
+
+      function draw() {
+        for(let row = 0; row < 4; row++) {
+          for(let col = 0; col < 3; col++) {
+            const x = 25 + 50 * col;
+            const y = 25 + 50 * row;
+
+            const radius = 20;
+            const startAngle = 0;
+            const endAngle = Math.PI + (Math.PI * col) / 2;
+            
+            const antiClockWise = row % 2 === 0 ? false : true;
+
+            ctx.beginPath();
+            ctx.arc(x, y, radius, startAngle, endAngle, antiClockWise);
+
+            if (row > 1) {
+              ctx.fill();
+            } else {
+              ctx.stroke();
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
