@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>직사각형 (rect)</title>
+    
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body onload="draw();">
+    <canvas id="tutorial" width="150" height="150"></canvas>
+
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+
+      function draw() {
+        ctx.beginPath();
+        ctx.moveTo(25, 25);
+        ctx.lineTo(20, 40);
+        
+        ctx.rect(20, 40, 50, 50);
+
+        ctx.lineTo(70, 40);
+        ctx.lineTo(75, 25);
+        ctx.lineTo(25, 25);
+        ctx.closePath();
+        
+        ctx.fill();
+      }
+    </script>
+  </body>
+</html>
