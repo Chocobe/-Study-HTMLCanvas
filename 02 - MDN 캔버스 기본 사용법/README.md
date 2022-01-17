@@ -1,5 +1,51 @@
 # (MDN) 캔버스 기본 사용법 정리
 
+# 00 - 캔버스 헨드북
+
+* 사각형 그리기
+  * ``ctx.fillRect(x, y, width, height)``
+  * ``ctx.strokeRect(x, y, width, height)``
+  * ``ctx.clearRect(x, y, width, height)``
+
+<br />
+
+* 펜 이동하기
+  * ``ctx.moveTo(x, y)``
+
+<br />
+
+* 선 그리기
+  * ``ctx.beginPath()``
+  * ``ctx.lineTo(x, y)``
+  * ``ctx.closePath()``
+  * ``ctx.rect()``
+  * ``ctx.stroke()``
+  * ``ctx.fill()``
+
+<br />
+
+* 호 그리기
+  * ``ctx.arc(x, y, radius, startAngle, endAngle, anticlockwise)``
+  * ``ctx.arcTo(x1, y1, x2, y2, radius)``
+
+<br />
+
+* 베지어 곡선과 이차 곡선 그리기
+  * ``quadraticCurveTo(cp1x, cp1y, x, y)``
+  * ``bezierCurveTo(cp1x, cp1y, cp2x, cp2y, x, y)``
+
+<br />
+
+* ``Path2D`` 객체
+  * ``new Path2D()``
+  * ``path2d.선_그리기_메서드()``
+
+
+
+<br /><hr /><br />
+
+
+
 # 01 - 캔버스 기본 사용법
 
 ```javascript
