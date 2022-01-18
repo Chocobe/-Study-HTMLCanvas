@@ -329,3 +329,53 @@ new Path2D(SVG데이터);
 
 ``Path2D`` 객체를 ``Canvas`` 에 렌더링 하려면, ``context.fill(Path2D객체)`` 또는 ``context.stroke(Path2D객체)`` 형식으로 그릴 수 있습니다.
 
+
+
+<br /><hr /><br />
+
+
+
+# 03. 스타일과 색 적용하기
+
+## 03-01. 색상
+
+도형의 면과 선에 색을 적용할 수 있습니다.
+
+색상을 변경하려면, 다음 Property 에 ``CSS Color`` 값을 지정하여 적용할 수 있습니다.
+
+* ``fillStyle = 색상값``: 면 색상값 적용
+* ``strokeStyle = 색상값``: 선 색상값 적용
+
+<br />
+
+아래 코드는 색상을 적용하는 예시 입니다.
+
+```javascript
+context.fillStyle = "pink";
+context.fillStyle = "#ff1493";
+context.fillStyle = "rgb(255, 14, 93)";
+context.fillStyle = "rgba(255, 14, 93, 33);
+```
+
+
+
+<br /><br />
+
+
+
+## 03-02. 투명도
+
+도형의 색상값에 투명도를 지정할 수 있습니다.
+
+투명도를 지정하는 방법은 다음 두가지가 있습니다.
+
+* ``globalAlpha`` Property 에 ``0.0 ~ 1.0`` 값으로 설정
+* 색상값에 ``rgba(x, y, z, a)`` 로 설정
+
+<br />
+
+``globalAlpha`` Property 를 설정하면, 그 시점 이후로 그리는 모든 도형에 해당 투명도가 적용 됩니다.
+
+그래서 개별로 투명도를 설정하고 싶다면, ``fillStyle`` 또는 ``strokeStyle`` 에 ``rgba()`` 로 설정하여 사용합니다.
+
+<br />
