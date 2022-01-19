@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>createLinearGradient 예제</title>
+    
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body onload="draw();">
+    <canvas id="tutorial" width="150" height="150"></canvas>
+
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+
+      function draw() {
+        // linearGradient 1
+        const linearGradient1 = ctx.createLinearGradient(0, 0, 0, 150);
+        linearGradient1.addColorStop(0, "#00ABEB");
+        linearGradient1.addColorStop(0.5, "#FFF");
+        linearGradient1.addColorStop(0.5, "#26C000");
+        linearGradient1.addColorStop(1, "#FFF");
+
+        ctx.fillStyle = linearGradient1;
+        ctx.fillRect(10, 10, 130, 130);
+
+        // linearGradient 2
+        const linearGradient2 = ctx.createLinearGradient(0, 50, 0, 95);
+        linearGradient2.addColorStop(0.5, "#000");
+        linearGradient2.addColorStop(1, "rgba(0, 0, 0, 0)");
+
+        ctx.strokeStyle = linearGradient2;
+        ctx.strokeRect(50, 50, 50, 50);
+      }
+    </script>
+  </body>
+</html>

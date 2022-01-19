@@ -379,3 +379,133 @@ context.fillStyle = "rgba(255, 14, 93, 33);
 그래서 개별로 투명도를 설정하고 싶다면, ``fillStyle`` 또는 ``strokeStyle`` 에 ``rgba()`` 로 설정하여 사용합니다.
 
 <br />
+
+```javascript
+// globalAlpha 예제
+/** @type { HTMLCanvasElement } */
+const canvas = document.querySelector("#tutorial");
+const ctx = canvas.getContext("2d");
+
+function draw() {
+  ctx.fillStyle = "#FD0";
+  ctx.fillRect(0, 0, 75, 75);
+  
+  ctx.globalAlpha = 0.5;
+  // 이후 그리는 도형의 alpha 값에 0.5 가 적용 됩니다.
+}
+```
+
+<br />
+
+```javascript
+// rgba() 예제
+
+/** @type { HTMLCanvasElement } */
+const canvas = document.querySelector("#tutorial");
+const ctx = canvas.getContext("2d");
+
+function draw() {
+  // alpha 에 55 를 설정 합니다.
+  fillStyle = "rgba(22, 33, 44, 55)";
+}
+```
+
+
+
+<br /><br />
+
+
+
+## 03-03. 선 모양
+
+``선 (path)`` 의 모양을 설정할 수 있습니다.
+
+* ``lineWidth = 값``: 선 두께 설정
+* ``lineCap = 타입``: 선의 끝 모양 설정
+  * ``butt``: 선의 끝 좌표에 딱맞게 그립니다.
+  * ``round``: 선의 끝 모양을 둥글게 그립니다.
+  * ``square``: 선 두께의 반만큼 더 그립니다.
+* ``miterLimit = 값``: 두 선이 ``예각`` 으로 만날 때, ``접합점의 두께 제한값`` 설정
+* ``getLineDash()``: 현재 선의 ``대시 패턴 배열`` 을 반환
+* ``setLineDash(segments)``: ``대시 패턴`` 설정
+* ``lineDashOffset = 값``: 선의 ``대시 패턴`` 의 ``시작 지점`` 설정
+
+
+
+<br /><br />
+
+
+
+## 03-04. Gradient
+
+``Canvas`` 에 그라디언트 색상을 사용하려면, 다음 객체를 생성하여 만들 수 있습니다.
+
+* ``createLinearGradient(x1, y1, x2, y2)``: 선형 그라디언트 객체를 생성 합니다.
+* ``createRadialGradient(x1, y1, r1, x2, y2, r2)``: 원형 그라디언트 객체를 생성 합니다.
+
+<br />
+
+생성한 ``Gradient`` 객체는 ``fillStyle`` 또는 ``strokeStyle`` 에 대입하여 사용할 수 있습니다.
+
+```javascript
+const linearGradient = ctx.createLinearGradient(0, 0, 150, 150);
+ctx.fillStyle = linearGradient;
+
+const radialGradient = new createRadialGradient(75, 75, 0, 75, 75, 100);
+ctx.strokeStyle = radialGradient;
+```
+
+<br />
+
+그리고 ``Gradient`` 객체의 ``addColorStop(position, color)`` 메서드를 사용하여, 색을 적용할 수 있습니다.
+
+```javascript
+const linearGradient = ctx.createLinearGradient(0, 0, 150, 150);
+linearGradient.addColorStop(0, "#fff");
+linearGradient.addColorStop(1, "#000");
+
+ctx.fillStyle = linearGradient;
+```
+
+
+
+<br /><br />
+
+
+
+## 03-05. patterns
+
+반복적인 패턴을 구현하는 방법 입니다.
+
+``createPattern(image, type)`` 메서드를 사용하여 패턴을 생성할 수 있습니다.
+
+``createPattern()`` 의 ``image`` 인자에는 ``<img />``, ``<video />``, ``다른 <canvas />`` 등을 사용할 수 있습니다.
+
+그리고 ``type`` 에 지정한 값에 따라, 이미지의 반복 방법을 지정할 수 있습니다.
+
+<br />
+
+``type`` 인자로 사용할 수 있는 값은 다음과 같습니다.
+
+* ``repeat``
+* ``repeat-x``
+* ``repeat-y``
+* ``no-repeat``
+
+<br />
+
+아래 코드는 ``Pattern`` 생성 예시 입니다.
+
+```javascript
+/** @type { HTMLCanvasElement } */
+const canvas = document.querySelector("#tutorial");
+const ctx = canvas.getContext("2d");
+
+const img = new Image();
+img.src = "http://...";
+
+img.onload = function() {
+  const pattern = ctx.createPattern(img, "repeat");
+  ctx.fillStyle = pattern;
+};
+```

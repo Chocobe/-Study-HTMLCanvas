@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>createRadialGradient 예제</title>
+    
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body onload="draw();">
+    <canvas id="tutorial" width="150" height="150"></canvas>
+
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+
+      function draw() {
+        // RadialGradient 1
+        const radialGradient1 = ctx.createRadialGradient(45, 45, 10, 52, 50, 30);
+        radialGradient1.addColorStop(0, "#A7D30C");
+        radialGradient1.addColorStop(0.9, "#019F62");
+        radialGradient1.addColorStop(1, "rgba(1, 159, 98, 0)");
+
+        // RadialGradient 2
+        const radialGradient2 = ctx.createRadialGradient(105, 105, 20, 112, 120, 50);
+        radialGradient2.addColorStop(0, "#FF5F98");
+        radialGradient2.addColorStop(0.75, "#FF0188");
+        radialGradient2.addColorStop(1, "rgba(255, 1, 136, 0)");
+
+        // RadialGradient 3
+        const radialGradient3 = ctx.createRadialGradient(95, 15, 15, 102, 20, 40);
+        radialGradient3.addColorStop(0, "#00C9FF");
+        radialGradient3.addColorStop(0.8, "#00B5E2");
+        radialGradient3.addColorStop(1, "rgba(0, 201, 255, 0)");
+
+        // RadialGradient 4
+        const radialGradient4 = ctx.createRadialGradient(0, 150, 50, 0, 140, 90);
+        radialGradient4.addColorStop(0, "#F4F201");
+        radialGradient4.addColorStop(0.8, "#E4C700");
+        radialGradient4.addColorStop(1, "rgba(228, 199, 0, 0)");
+
+        ctx.fillStyle = radialGradient4;
+        ctx.fillRect(0, 0, 150, 150);
+
+        ctx.fillStyle = radialGradient3;
+        ctx.fillRect(0, 0, 150, 150);
+
+        ctx.fillStyle = radialGradient2;
+        ctx.fillRect(0, 0, 150, 150);
+
+        ctx.fillStyle = radialGradient1;
+        ctx.fillRect(0, 0, 150, 150);
+      }
+    </script>
+  </body>
+</html>

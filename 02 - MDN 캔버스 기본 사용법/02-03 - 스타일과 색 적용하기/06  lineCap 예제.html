@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>lineCap 예제</title>
+    
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body onload="draw();">
+    <canvas id="tutorial" width="150" height="150"></canvas>
+
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+
+      function draw() {
+        ctx.strokeStyle = "#09F";
+
+        // 안내선 그리기
+        ctx.beginPath();
+        ctx.moveTo(10, 10);
+        ctx.lineTo(140, 10);
+        ctx.moveTo(10, 140);
+        ctx.lineTo(140, 140);
+
+        ctx.stroke();
+
+        ctx.strokeStyle = "#000";
+
+        const lineCap = ['butt', 'round', 'square'];
+
+        lineCap.forEach((curLineCap, idx) => {
+          ctx.lineWidth = 15;
+          ctx.lineCap = curLineCap;
+          
+          ctx.beginPath();
+          ctx.moveTo(25 + idx * 50, 10);
+          ctx.lineTo(25 + idx * 50, 140);
+
+          ctx.stroke();
+        });
+      }
+    </script>
+  </body>
+</html>
