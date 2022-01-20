@@ -558,3 +558,105 @@ img.onload = function() {
   * ``textAlign: center``: 중앙 정렬
 * ``textBaseLine``: 텍스트 베이스 라인 설정
 * ``direction``: 글자 방향
+
+
+
+<br /><hr /><br />
+
+
+
+# 05. 이미지 사용하기
+
+## 05-01. 이미지 불러오기
+
+``Canvas`` 에 그릴 수 있는 파일은 브라우저에서 사용할 수 있는 이미지 파일은 모두 사용할 수 있습니다.
+
+또한 비디오를 그릴수도 있으며, 다른 ``<canvas />`` 를 사용할 수도 있습니다.
+
+다음은 ``Canvas`` 에 그릴 수 있는 데이터 타입 입니다.
+
+* ``HTMLImageElement``
+* ``SVGImageElement``
+* ``HTMLVideoElement``
+* ``HTMLCanvasElement``
+
+<br />
+
+위 타입의 데이터는 ``context.drawImage(imgage, x, y)`` 메서드를 사용하여 그릴 수 있습니다.
+
+```javascript
+context.drawImage(img, x, y);
+
+// img: 이미지 데이터
+// x: X축 좌표값
+// y: Y축 좌표값
+```
+
+<br />
+
+주의할 점은, 이미지를 로딩이 완료 되어야 그릴 수 있기 때문에, ``HTMLImageElement.onload`` Property 를 사용하여 그리는 로직을 작성해야 합니다.
+
+```javascript
+/** @type { HTMLCanvasElement } */
+const canvas = document.querySelector("#tutorial");
+const ctx = canvas.getContext("2d");
+
+function draw() {
+  const img = new Image();
+
+  img.onload = () => {
+    ctx.drawImage(img, 0, 0);
+  }
+
+  img.src = "https://mdn.mozillademos.org/files/5395/backdrop.png";
+}
+```
+
+
+
+<br /><br />
+
+
+
+## 05-02. 비례 크기 조정
+
+``Canvas`` 에 그릴 이미지에 ``width`` 와 ``height`` 를 지정하여 그릴 수 있습니다.
+
+```javascript
+drawImage(img, x, y, width, height);
+
+// img: 이미지 데이터
+// x: X축 좌표값
+// y: Y축 좌표값
+// width: 이미지를 그릴 너비
+// height: 이미지를 그릴 높이
+```
+
+<br />
+
+## 05-03. 이미지 자르기
+
+이미지를 ``canvas`` 에 그릴 때, 다음과 같은 방법으로 그릴 수 있습니다.
+
+* 이미지의 특정 좌표에서 부분 (사각형) 만 사용
+* 특정지은 부분 이미지를 ``canvas`` 의 특정 위치에 특정 너비와 높이로 그리기
+
+<br />
+
+위와 같은 기능은 ``drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)`` 로 제공 합니다.
+
+```javascript
+context.drawImage(image, sx, sy, sWidth, sHeight, dX, dY, dWidth, dHeight);
+
+// image: 이미지 데이터
+
+// sx: 원본 이미지에서 잘라낼 x좌표값
+// sy: 원본 이미지에서 잘라낼 y좌표값
+// sWidth: 원본 이미지에서 잘라낼 너비
+// sHeight: 원본 이미지에서 잘라낼 높이
+
+// dx: 이미지를 그릴 x좌표값
+// dy: 이미지를 그릴 y좌표값
+// dWidth: 이미지를 그릴 너비값
+// dHeight: 이미지를 그릴 높이값
+```

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>이미지 자르기</title>
+    
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body onload="draw();">
+    <canvas id="tutorial" width="150" height="150"></canvas>
+
+    <div style="display: none;">
+      <img 
+        id="source" 
+        src="https://mdn.mozillademos.org/files/5397/rhino.jpg"
+        width="300"
+        height="227"
+      >
+
+      <img
+        id="frame"
+        src="https://mdn.mozillademos.org/files/242/Canvas_picture_frame.png"
+        width="132"
+        height="150"
+      >
+    </div>
+    
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+
+      function draw() {
+        ctx.drawImage(
+          document.querySelector("#source"),
+          33, 71, 104, 124,
+          21, 20, 87, 104
+        );
+
+        ctx.drawImage(
+          document.querySelector("#frame"),
+          0, 0
+        );
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>비례 크기 조정</title>
+    
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body onload="draw();">
+    <canvas id="tutorial" width="150" height="150"></canvas>
+
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+
+      function draw() {
+        const img= new Image();
+
+        img.onload = () => {
+          for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 3; j++) {
+              ctx.drawImage(img, j * 50, i * 38, 50, 38);
+            }
+          }
+        };
+
+        img.src = "https://mdn.mozillademos.org/files/5397/rhino.jpg";
+      }
+    </script>
+  </body>
+</html>
