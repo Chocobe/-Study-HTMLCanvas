@@ -529,8 +529,32 @@ img.onload = function() {
 
 
 
+<br /><hr /><br />
+
+
+
+# 04. 텍스트 그리기
+
+## 04-01. 텍스트 그리기
+
+텍스트를 그리는 메서드는 2가지가 있습니다.
+
+* ``fillText(text, x, y[, maxWidth])``: 색이 채워진 글자를 그립니다.
+* ``strokeText(text, x, y[, maxWidth])``: 선으로 글자를 그립니다.
+
+
 <br /><br />
 
 
 
-## 03-07. 
+## 04-02. 텍스트 스타일 적용하기
+
+다음은 텍스트 설정을 위한 Property 입니다.
+
+* ``font``: 텍스트 스타일 Property 입니다.
+* ``textAlign``: 텍스트 정렬 Property 입니다.
+  * ``textAlign: start`` 또는 ``textAlign: left``: 좌측 정렬
+  * ``textAlign: end`` 또는 ``textAlign: right``: 우측 정렬
+  * ``textAlign: center``: 중앙 정렬
+* ``textBaseLine``: 텍스트 베이스 라인 설정
+* ``direction``: 글자 방향
