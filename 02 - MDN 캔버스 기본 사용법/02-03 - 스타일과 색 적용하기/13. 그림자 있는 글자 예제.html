@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>그림자 있는 글자 예제</title>
+    
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body onload="draw();">
+    <canvas id="tutorial" width="150" height="150"></canvas>
+
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+
+      function draw() {
+        ctx.shadowOffsetX = 3;
+        ctx.shadowOffsetY = 6;
+        ctx.shadowBlur = 3;
+        ctx.shadowColor = "rgba(0, 0, 0, 0.8)";
+        
+        ctx.font = "24px Times New Roman";
+        ctx.fillText("Sample String", 5, 30);
+
+        ctx.beginPath();
+        ctx.arc(75, 75, 25, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+    </script>
+  </body>
+</html>

@@ -473,7 +473,7 @@ ctx.fillStyle = linearGradient;
 
 
 
-## 03-05. patterns
+## 03-05. Patterns
 
 반복적인 패턴을 구현하는 방법 입니다.
 
@@ -509,3 +509,28 @@ img.onload = function() {
   ctx.fillStyle = pattern;
 };
 ```
+
+
+
+<br /><br />
+
+
+
+## 03-06. Shadow
+
+``Shadow`` 효과는 ``context`` 에서 ``shadow___`` 로 제공하는 Property 로 만들 수 있습니다.
+
+``shadow`` 효과 관련 Property 는 다음과 같습니다.
+
+* ``shadowOffsetX = 값``: 원본과 그림자의 X축 거리 입니다.
+* ``shadowOffsetY = 값``: 원본과 그림자의 Y축 거리 입니다.
+* ``shadowBlur = 값``: 그림자의 퍼짐 정도 입니다.
+* ``shadowColor = 색상값``: 그림자 색상값 입니다.
+
+
+
+<br /><br />
+
+
+
+## 03-07. 
