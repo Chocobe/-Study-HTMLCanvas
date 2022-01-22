@@ -660,3 +660,198 @@ context.drawImage(image, sx, sy, sWidth, sHeight, dX, dY, dWidth, dHeight);
 // dWidth: 이미지를 그릴 너비값
 // dHeight: 이미지를 그릴 높이값
 ```
+
+
+
+<br /><hr /><br />
+
+
+
+# 06. 모양 변환 (transformations)
+
+## 06-01. ``상태(state)`` 의 저장과 복원
+
+``canvas`` 에 그리기 위해 설정한 상태값들은 ``저장`` 과 ``복원`` 이 가능 합니다.
+
+* ``save()``: 현재의 모든 상태를 ``stack`` 에 저장 합니다.
+* ``restore()``: ``stack`` 에 저장된 마지막 ``상태(state)`` 를 복원 시킵니다.
+
+
+
+<br /><br />
+
+
+
+## 06-02. 이동 (translating)
+
+지금까지는 ``Canvas`` 의 ``원점`` 에서 그렸습니다.
+
+``원점`` 은 좌표의 기준점이 되는데, 이를 이동시키므로써 각 도형을 적대경로로 그리지 않고, 상태경로로 그려서 사용할 수 있습니다.
+
+```javascript
+translate(x, y);
+
+// x: x축으로 이동할 거리
+// y: y축으로 이동할 거리
+```
+
+<br />
+
+주의할 점은, ``translate(x, y)`` 를 실행하기 전의 ``원점`` 에서 이동하는 것입니다.
+
+그러므로, ``원점`` 을 다음과 같이 이동한다면,
+
+1. 원점 위치: (30, 30)
+2. 원점 위치: (15, 15)
+
+<br />
+
+아래와 같이 ``translate(x, y)`` 를 해야 합니다.
+
+```javascript
+translate(30, 30);
+translate(-15, -15);
+```
+
+<br />
+
+그리고 ``translate(x, y)`` 사용하기 전에는 ``save()`` 를 하여 원래의 상태값을 보존하는 것이 좋습니다.
+
+대부분의 경우, ``translate(x, y)`` 는 특정 대상을 그리기 위한 원점 이동이므로, 복원을 필요로 하기 때문입니다.
+
+```javascript
+/** @type { HTMLCanvasElement } */
+const canvas = document.querySelector("#tutorial");
+const ctx = canvas.getContext("2d");
+
+function draw() {
+  // 상태 저장
+  ctx.save();
+  
+  ctx.translate(30, 30);
+
+  // 원래 상태 복원
+  ctx.restore();
+}
+```
+
+
+
+<br /><hr /><br />
+
+
+
+## 06-03. 회전 (rotating)
+
+``rotate(angle)`` 을 사용하여 ``Canvas`` 를 회전시킬 수 있습니다.
+
+``angle`` 이 양수이면, 시계방향으로 회전합니다.
+
+그리고 회전은 ``원점``을 기준점으로 회전하므로, ``translate(x, y)`` 를 사용하여 중심점을 이동시키며 사용할 수 있습니다.
+
+```javascript
+/** @type { HTMLCanvasElement } */
+const canvas = document.querySelector("#tutorial");
+const ctx = canvas.getContext("2d");
+
+function draw() {
+  ctx.rotate((Math.PI / 180) * 25); // 25도 만큼 회전
+  ctx.fillRect(0, 0, 100, 100); // 실제 렌더링은 25도 회전된 사각형을 그립니다.
+}
+```
+
+
+<br /><br />
+
+
+
+## 06-04. 확대, 축소 (scaling)
+
+``Canvas`` 의 기본 단위는 ``1px`` 입니다.
+
+``scale(x, y)`` 를 사용하면, ``x축`` 과 ``y축`` 의 ``단위 Pixel`` 을 변경할 수 있습니다.
+
+```javascript
+/** @type { HTMLCanvasElement } */
+const canvas = document.querySelector("#tutorial");
+const ctx = canvas.getContext("2d");
+
+function draw() {
+  ctx.scale(1.1, 2);
+
+  // x축 단위 Pixel을 1.1배
+  // y축 단위 Pixel을 2배
+}
+```
+
+<br />
+
+``scale(x, y)`` 의 인자에는 실수값을 사용하는데, ``1.0`` 이면 ``1배 (그대로)`` 가 됩니다.
+
+그리고 음수를 사용하면, 대칭으로 나타낼 수 있습니다.
+
+```javascript
+/** @type { HTMLCanvasElement } */
+const canvas = document.querySelector("#tutorial");
+const ctx = canvas.getContext("2d");
+
+function draw() {
+  ctx.translate(100, 0);
+  ctx.scale(-1.0, 0);
+  ctx.fillRect(100, 100); // x축으로 좌우 반전된 이미지를 그립니다.
+}
+```
+
+
+
+<br /><br />
+
+
+
+## 06-05. 변형 (transforms)
+
+``Canvas`` 의 ``변형 (transforms)`` 기능을 사용하면, 행렬연산으로 여러가지 변형을 간단하게 적용시킬 수 있습니다.
+
+``변형 (transforms)`` 관련 메서드는 총 3가지 입니다.
+
+```javascript
+// 현재 상태에서 변형
+transform(a, b, c, d, e, f);
+
+// a (m11): x축 으로 scale
+// b (m12): x축 으로 skew
+// c (m21): y축 으로 skew
+// d (m22): y축 으로 scale
+// e (dx): x축 방향으로 translate
+// f (dy): y축 방향으로 translate
+```
+
+<br />
+
+```javascript
+// 내부에서 restore() 실행 후, 변형
+setTransform(a, b, c, d, e, f);
+```
+
+<br />
+
+```javascript
+// 모든 변형을 초기화
+resetTransform();
+```
+
+<br />
+
+``transform(a, b, c, d, e, f)`` 는 현재 상태에서 여러가지 변형을 시킬 수 있습니다.
+
+``setTransform(a, b, c, d, e, f)` 를 사용하면, 변형된 값들을 다시 초기화 한 상에서 변형을 시켜줍니다.
+
+즉, ``setTransform(a, b, c, d, e, f)`` 는 내부에서 ``restore()`` 를 한 후, 변형을 시켜주는 메서드 입니다.
+
+<br />
+
+그리고 ``resetTransform()`` 메서드는 모든 변형을 초기화 시켜줍니다.
+
+이는 ``setTransform(1, 0, 0, 1, 0, 0)`` 을 사용한 것과 동일한데, 인자로 넘겨준 값이 ``단위 행렬`` 이기 때문입니다.
+
+<br />

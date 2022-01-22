@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>save restore Canvas 상태(state) 예제</title>
+    
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body onload="draw();">
+    <canvas id="tutorial" width="150" height="150"></canvas>
+
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+
+      function draw() {
+        ctx.fillRect(0, 0, 150, 150);
+        ctx.save();
+
+        ctx.fillStyle = "#09F";
+        ctx.fillRect(15, 15, 120, 120);
+        ctx.save();
+
+        ctx.fillStyle = "#FFF";
+        ctx.globalAlpha = 0.5;
+        ctx.fillRect(30, 30, 90, 90);
+
+        ctx.restore();
+        ctx.fillRect(45, 45, 60, 60);
+
+        ctx.restore();
+        ctx.fillRect(60, 60, 30, 30);
+      }
+    </script>
+  </body>
+</html>

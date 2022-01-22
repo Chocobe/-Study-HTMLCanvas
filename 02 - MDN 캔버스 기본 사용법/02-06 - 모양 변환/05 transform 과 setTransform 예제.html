@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>transform 과 setTransform 예제</title>
+    
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body onload="draw();">
+    <canvas id="tutorial" width="300" height="300"></canvas>
+
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+
+      function draw() {
+        const sin = Math.sin(Math.PI / 6);
+        const cos = Math.cos(Math.PI / 6);
+        let c = 0;
+
+        ctx.translate(100, 100);
+
+        // 직사각형을 원형으로 그리기
+        for (let i = 0; i < 12; i++) {
+          c = Math.floor(255 / 12 * i);
+
+          ctx.fillStyle = `rgb(${c}, ${c}, ${c})`;
+          ctx.fillRect(0, 0, 100, 10);
+          ctx.transform(cos, sin, -sin, cos, 0, 0);
+        }
+
+        // x축 반전된 사각형 그리기
+        ctx.setTransform(-1, 0, 0, 1, 100, 100);
+        ctx.fillStyle = "rgba(255, 128, 255, 0.5)";
+        ctx.fillRect(0, 50, 100, 100);
+      }
+    </script>
+  </body>
+</html>

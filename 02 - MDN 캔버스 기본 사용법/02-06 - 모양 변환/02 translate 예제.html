@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>translate 예제</title>
+    
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body onload="draw();">
+    <canvas id="tutorial" width="150" height="150"></canvas>
+
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+
+      function draw() {
+        for (let i = 0; i < 3; i++) {
+          for (let j = 0; j < 3; j++) {
+            ctx.save();
+
+            ctx.fillStyle = `rgb(${51 * i}, ${255 - 51 * i},255)`;
+            ctx.translate(10 + 50 * j, 10 + 50 * i);
+            ctx.fillRect(0, 0, 25, 25);
+
+            ctx.restore();
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

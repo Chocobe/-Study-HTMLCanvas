@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Skew 연습</title>
+
+    <style>
+      body {
+        border: 1px solid #000;
+      }
+
+      img {
+        display: block;
+
+        border: 1px solid #ff1493;
+        
+        /* transform-origin: 0 0; */
+      }
+
+      .origin {
+        animation: mySkewX 5s infinite ease;
+      }
+
+      @keyframes mySkewX {
+        0% {
+          transform: skewX(0deg);
+        }
+
+        50% {
+          transform: skewX(180deg);
+        }
+
+        100% {
+          transform: skewX(360deg);
+        }
+      }
+
+      .skewX120 {
+        margin: 0 auto;
+        transform: skewX(170deg);
+      }
+    </style>
+  </head>
+
+  <body>
+    <img class="origin" src="./Kirby.png">
+
+    <img class="skewX120" src="./Kirby.png">
+  </body>
+</html>
