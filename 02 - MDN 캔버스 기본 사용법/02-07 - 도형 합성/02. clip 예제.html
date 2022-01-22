@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>clip 예제</title>
+    
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body onload="draw();">
+    <canvas id="tutorial" width="150" height="150"></canvas>
+
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+
+      function draw() {
+        ctx.fillRect(0, 0, 150, 150);
+        
+        // 원 모양으로 ``잘라내기 경로`` 생성
+        ctx.translate(75, 75);
+        ctx.beginPath();
+        ctx.arc(0, 0, 60, 0, Math.PI * 2);
+        ctx.clip();
+
+        // 배경 그리기
+        const linearGradient = ctx.createLinearGradient(0, -75, 0, 75);
+        linearGradient.addColorStop(0, "#232256");
+        linearGradient.addColorStop(1, "#143778");
+
+        ctx.fillStyle = linearGradient;
+        ctx.fillRect(-75, -75, 150, 150);
+
+        // 별 그리기
+        for (let i = 0; i < 50; i++) {
+          ctx.save();
+
+          ctx.fillStyle = "#fff";
+          ctx.translate(
+            75 - Math.floor(Math.random() * 150),
+            75 - Math.floor(Math.random() * 150)
+          );
+
+          drawStar(ctx, Math.floor(Math.random() * 4) + 2);
+        }
+      }
+
+      /**
+       * // 별 그리기 메서드
+       * @param { CanvasRenderingContext2D } context
+       * @param { number } radius
+       */
+      function drawStar(context, radius) {
+        context.save();
+
+        context.beginPath();
+        context.moveTo(radius, 0);
+        
+        for (let i = 0; i < 9; i++) {
+          context.rotate(Math.PI / 5);
+
+          if (i % 2 === 0) {
+            context.lineTo((radius / 0.525731) * 0.200811, 0);
+          } else {
+            context.lineTo(radius, 0);
+          }
+        }
+
+        context.closePath();
+        context.fill();
+        context.restore();
+      }
+    </script>
+  </body>
+</html>

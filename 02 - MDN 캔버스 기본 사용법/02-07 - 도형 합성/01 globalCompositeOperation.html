@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>globalCompositeOperation</title>
+
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body onload="draw();">
+    <canvas id="tutorial" width="150" height="150"></canvas>
+
+    <div>
+      <label for="applyIdx">적용 번호: </label>
+      <input type="number" id="applyIdx" value="0" min="0" max="3">
+    </div>
+
+    <div>
+      <label for="globalCompositeOperation">globalCompositeOperation: </label>
+
+      <select id="globalCompositeOperation" autofocus>
+        <option value="source-over" selected>01. source-over</option>
+        <option value="source-in">02. source-in</option>
+        <option value="source-out">03. source-out</option>
+        <option value="source-atop">04. source-atop</option>
+
+        <option value="destination-over">05. destination-over</option>
+        <option value="destination-in">06. destination-in</option>
+        <option value="destination-out">07. destination-out</option>
+        <option value="destination-atop">08. destination-atop</option>
+
+        <option value="lighter">09. lighter</option>
+        <option value="copy">10. copy</option>
+        <option value="xor">11. xor</option>
+        <option value="multiply">12. multiply</option>
+
+        <option value="screen">13. screen</option>
+        <option value="overlay">14. overlay</option>
+        <option value="darken">15. darken</option>
+        <option value="lighten">16. lighten</option>
+
+        <option value="color-dodge">17. color-dodge</option>
+        <option value="color-burn">18. color-burn</option>
+        <option value="hard-light">19. hard-light</option>
+        <option value="soft-light">20. soft-light</option>
+
+        <option value="difference">21. difference</option>
+        <option value="exclusion">22. exclusion</option>
+        <option value="hue">23. hue</option>
+        <option value="saturation">24. saturation</option>
+
+        <option value="color">25. color</option>
+        <option value="luminosity">26. luminosity</option>
+      </select>
+    </div>
+
+    <script type="application/javascript">
+      const $globalCompositeOperation = document.querySelector("#globalCompositeOperation");
+      const $applyIdx = document.querySelector("#applyIdx");
+      
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+
+      /** 
+       * @param { string } globalCompositeOperation 
+       * @param { number } applyIdx
+       */
+      function draw(globalCompositeOperation, applyIdx) {
+        console.log(ctx.globalCompositeOperation);
+
+        if (applyIdx === 0) ctx.globalCompositeOperation = globalCompositeOperation;
+        
+        const radialGradient1 = ctx.createRadialGradient(75, 50, 0, 75, 50, 50);
+        radialGradient1.addColorStop(0, "#fff");
+        radialGradient1.addColorStop(1, "red");
+        ctx.fillStyle = radialGradient1;
+        ctx.beginPath();
+        ctx.arc(75, 50, 50, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (applyIdx === 1) ctx.globalCompositeOperation = globalCompositeOperation;
+
+        const radialGradient2 = ctx.createRadialGradient(50, 100, 0, 50, 100, 50);
+        radialGradient2.addColorStop(0, "#fff");
+        radialGradient2.addColorStop(1, "green");
+        ctx.fillStyle = radialGradient2;
+        ctx.beginPath();
+        ctx.arc(50, 100, 50, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (applyIdx === 2) ctx.globalCompositeOperation = globalCompositeOperation;
+
+        const radialGradient3 = ctx.createRadialGradient(100, 100, 0, 100, 100, 50);
+        radialGradient3.addColorStop(0, "#fff");
+        radialGradient3.addColorStop(1, "blue");
+        ctx.fillStyle = radialGradient3;
+        ctx.beginPath();
+        ctx.arc(100, 100, 50, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (applyIdx > 2) ctx.globalCompositeOperation = globalCompositeOperation;
+      }
+
+      document.querySelector("#globalCompositeOperation").addEventListener("change", e => {
+        const { target: { value }} = e;
+        const applyIdx = $applyIdx.value;
+
+        ctx.clearRect(0, 0, 150, 150);
+        draw(value, Number(applyIdx));
+      })
+
+      document.querySelector("#applyIdx").addEventListener("change", e => {
+        const { target: { value }} = e;
+        const globalCompositeOperation = $globalCompositeOperation.value;
+
+        ctx.clearRect(0, 0, 150, 150);
+        draw(globalCompositeOperation, Number(value));
+      })
+    </script>
+  </body>
+</html>

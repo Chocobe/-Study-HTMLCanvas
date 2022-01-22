@@ -854,4 +854,52 @@ resetTransform();
 
 이는 ``setTransform(1, 0, 0, 1, 0, 0)`` 을 사용한 것과 동일한데, 인자로 넘겨준 값이 ``단위 행렬`` 이기 때문입니다.
 
+
+
+<br /><br />
+
+
+
+## 06-06. 도형 합성
+
+지금까지 ``Canvas`` 에 도형을 그리는 방식은 항상 위에 그리는 방식 이었습니다.
+
+``globalCompositeOperation`` 속성을 사용하면, 이러한 도형의 합성에 대해 설정할 수 있습니다.
+
+또한 ``clearRect(x, y, width, height)`` 는 사각형 영역만 지울 수 있지만, ``globalCompositeOperation`` 속성을 사용하면, 자유롭게 지울 수도 있습니다.
+
 <br />
+
+``globalCompositeOperation = type`` 의 형식으로 사용하며, ``type`` 의 종류는 24가지가 있습니다.
+
+각 ``type`` 에 따라, 새로 그리는 도형과 기존 도형을 어떻게 조합할 것인지를 설정하게 됩니다.
+
+<img src="./readmeAssets/globalCompositeOperation.png"><br />
+
+
+
+<br /><br />
+
+
+
+## 06-07. 잘라내기 경로 (clipping path)
+
+``canvas`` 의 일부분만을 렌더링 하고 싶을 때, ``잘라내기 경로 (Clipping path)`` 를 사용합니다.
+
+기존에 ``선 (path)`` 를 사용하여 도형을 그릴 때에는, ``stroke()`` 또는 ``fill()`` 을 사용하였습니다.
+
+``잘라내기 경로 (Clipping path)`` 를 만들 때는, ``stroke()`` 또는 ``fill()`` 이 아닌, ``clip()`` 메서드를 호출하여 만들 수 있습니다.
+
+```javascript
+clip();
+```
+
+<br />
+
+``선 (path)`` 로 만든 ``Clipping path`` 영역만을 렌더링하게 됩니다.
+
+주의할 점은, ``clip()`` 메서드를 호출한 이후 그리는 도형에만 적용 됩니다.
+
+<br />
+
+그리고 ``save()`` 와 ``restore()`` 에 ``clip()`` 상태값도 저장 및 복원 됩니다.
