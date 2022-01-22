@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>태양계 애니메이션</title>
+    
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body onload="draw();">
+    <canvas id="tutorial" width="300" height="300"></canvas>
+
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+
+      const sun = new Image();
+      const moon = new Image();
+      const earth = new Image();
+
+      init();
+
+      function init() {
+        sun.src = "https://mdn.mozillademos.org/files/1456/Canvas_sun.png";
+        moon.src = "https://mdn.mozillademos.org/files/1443/Canvas_moon.png";
+        earth.src ="https://mdn.mozillademos.org/files/1429/Canvas_earth.png";
+
+        Promise.all([
+          new Promise(res => {
+            sun.onload = () => res();
+          }),
+
+          new Promise(res => {
+            moon.onload = () => res();
+          }),
+
+          new Promise(res => {
+            earth.onload = () => res();
+          }),
+        ])
+          .then(draw);
+      }
+
+      function draw() {
+        // Canvas 지우기
+        ctx.clearRect(0, 0, 300, 300);
+        // TODO: globalCompositeOperation 설정 on/off 확인하기
+        ctx.globalCompositeOperation = "destination-over";
+
+        // ctx.fillStyle = "rgba(255, 0, 0, 0.4)";
+        ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+        ctx.strokeStyle = "rgba(0, 153, 255, 0.4)";
+
+        const time = new Date();
+        
+        ctx.save();
+        ctx.translate(150, 150);
+        
+        // 지구
+        ctx.rotate(
+          ((Math.PI * 2) / 60) * time.getSeconds()
+          + (((Math.PI * 2) / (60 * 1000)) * time.getMilliseconds())
+        );
+        ctx.translate(105, 0);
+        ctx.fillRect(0, -12, 50, 24);
+        ctx.drawImage(earth, -12, -12);
+
+        ctx.save();
+        
+        // 달
+        ctx.rotate(
+          ((Math.PI * 2) / 6) * time.getSeconds()
+          + ((Math.PI * 2) / (6 * 1000)) * time.getMilliseconds()
+        );
+        ctx.translate(0, 28.5);
+        ctx.drawImage(moon, -3.5, -3.5);
+        ctx.restore();
+
+        // 지구의 공전궤도
+        ctx.restore();
+        ctx.beginPath();
+        ctx.arc(150, 150, 105, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.drawImage(sun, 0, 0);
+        
+        requestAnimationFrame(draw);
+      }
+    </script>
+  </body>
+</html>
