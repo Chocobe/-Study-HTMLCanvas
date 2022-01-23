@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>마우스 컨트롤 추가하기</title>
+    
+    <style>
+      #tutorial {
+        border: 1px solid #383841;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <canvas id="tutorial" width="600" height="300"></canvas>
+
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+
+      let raf;
+      let running = false;
+
+      const ball = {
+        x: 100,
+        y: 100,
+        vx: 5,
+        vy: 2,
+        radius: 25,
+        color: "#ff1493",
+
+        draw() {
+          const { color, x, y, radius } = this;
+
+          ctx.fillStyle = color;
+          ctx.beginPath();
+          ctx.arc(x, y, radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function draw() {
+        clear();
+        
+        // y축에 가속도 적용
+        ball.vy *= 0.99;
+        ball.vy += 0.22;
+        
+        const { x, vx, y, vy } = ball;
+
+        if (x + vx > canvas.width || x + vx < 0) {
+          // x축 바운딩 감속
+          ball.vx *= -0.5;
+        }
+
+        if (y + vy > canvas.height || y + vy < 0) {
+          // y축 바운딩 감속
+          ball.vy *= -0.6;
+        }
+
+        ball.x += ball.vx;
+        ball.y += ball.vy;
+        ball.draw();
+
+        raf = requestAnimationFrame(draw);
+      }
+
+      function clear() {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
+      canvas.addEventListener("mousemove", ({ clientX, clientY }) => {
+        if (!running) {
+          clear();
+          ball.x = clientX;
+          ball.y = clientY;
+          ball.draw();
+        }
+      });
+
+      canvas.addEventListener("click", () => {
+        running = true;
+        draw();
+      });
+
+      canvas.addEventListener("mouseout", () => {
+        running = false;
+        cancelAnimationFrame(raf);
+      })
+
+      ball.draw();
+    </script>
+  </body>
+</html>
