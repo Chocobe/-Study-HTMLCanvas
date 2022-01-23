@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>움직이는 파노라마 사진</title>
+    
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body>
+    <canvas id="tutorial" width="800" height="200"></canvas>
+
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+
+      const img = new Image();
+      img.src = "https://mdn.mozillademos.org/files/4553/Capitan_Meadows,_Yosemite_National_Park.jpg";
+
+      const speed = 3;
+      const scale = 1.05;
+      const y = -4.5;
+
+      const dx = 0.75;
+      let imgWidth;
+      let imgHeight;
+      let x = 0;
+      let clearX;
+      let clearY;
+
+      img.onload = () => {
+
+        imgWidth = img.width * scale;
+        imgHeight = img.height * scale;
+
+        if (imgWidth > canvas.width) {
+          x = canvas.width - imgWidth;
+          clearX = imgWidth;
+        } else {
+          clearX = canvas.width;
+        }
+
+        if (imgHeight > canvas.height) {
+          clearY = imgHeight;
+        } else {
+          clearY = canvas.height;
+        }
+
+        draw();
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, clearX, clearY);
+
+        if (imgWidth <= canvas.width) {
+          if (x > canvas.width) {
+            x = 0;
+          }
+
+          if (x > (canvas.width - imgWidth)) {
+            ctx.drawImage(
+              img,
+              x - imgWidth + 1,
+              y,
+              imgWidth,
+              imgHeight
+            );
+          }
+        } else {
+          if (x > canvas.width) {
+             x = canvas.width - imgWidth;
+          }
+
+          if (x > (canvas.width - imgWidth)) {
+            ctx.drawImage(
+              img,
+              x - imgWidth + 1,
+              y,
+              imgWidth,
+              imgHeight
+            );
+          }
+        }
+
+        ctx.drawImage(img, x, y, imgWidth, imgHeight);
+        x += dx * speed;
+
+        requestAnimationFrame(draw);
+      }
+    </script>
+  </body>
+</html>
