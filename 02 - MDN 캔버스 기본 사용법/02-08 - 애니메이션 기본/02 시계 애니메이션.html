@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+  <html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>시계 애니메이션</title>
+    
+    <style type="text/css">
+      canvas {
+        border: 1px solid #000;
+      }
+    </style>
+
+  </head>
+  
+  <body onload="init()">
+    <canvas id="tutorial" width="150" height="150"></canvas>
+
+    <script type="application/javascript">
+      /** @type { HTMLCanvasElement } */
+      const canvas = document.querySelector("#tutorial");
+      const ctx = canvas.getContext("2d");
+      
+      function init() {
+        clock();
+      }
+      
+      function clock() {
+        const now = new Date();
+        
+        ctx.save();
+        ctx.clearRect(0, 0, 150, 150);
+        ctx.translate(75, 75);
+        ctx.scale(0.4, 0.4);
+        ctx.rotate(-Math.PI / 2);
+        ctx.strokeStyle = "#000";
+        ctx.fillStyle = "#fff";
+        ctx.lineWidth = 8;
+        ctx.lineCap = "round";
+        ctx.save();
+
+        // 시계핀 - 시
+        for (let i = 0; i < 12; i++) {
+          ctx.beginPath();
+          ctx.rotate(Math.PI / 6);
+          ctx.moveTo(100, 0);
+          ctx.lineTo(120, 0);
+          ctx.stroke();
+        }
+        ctx.restore();
+
+        // 시계핀 - 분 (2분에 핀 1개씩 표현)
+        ctx.save();
+        ctx.lineWidth = 5;
+
+        for (let i = 0; i < 60; i++) {
+          if (i % 5 !== 0) {
+            ctx.beginPath();
+            ctx.moveTo(117, 0);
+            ctx.lineTo(120, 0);
+            ctx.stroke();
+          }
+
+          ctx.rotate(Math.PI / 30);
+        }
+        ctx.restore();
+
+        const hours = now.getHours() > 12 
+          ? now.getHours() - 12 
+          : now.getHours();
+        const minutes = now.getMinutes();
+        const seconds = now.getSeconds();
+
+        ctx.fillStyle = "#000";
+        ctx.save();
+
+        // 시간 표시 - 시침
+        ctx.rotate(
+          ((Math.PI / 6) * hours)
+          + ((Math.PI / (6 * 60)) * minutes)
+          + ((Math.PI / (6 * 60 * 60)) * seconds)
+        );
+        ctx.lineWidth = 14;
+        ctx.beginPath();
+        ctx.moveTo(-20, 0);
+        ctx.lineTo(80, 0);
+        ctx.stroke();
+        ctx.restore();
+
+        // 시간 표시 - 분침
+        ctx.save();
+        ctx.rotate(
+          ((Math.PI / 30) * minutes)
+          + ((Math.PI / (30 * 60)) * seconds)
+        );
+        ctx.moveTo(-28, 0);
+        ctx.lineTo(112, 0);
+        ctx.stroke();
+        ctx.restore();
+
+        // 시간 표시 - 초침
+        ctx.save();
+        ctx.fillStyle = "#D40000";
+        ctx.strokeStyle = "#D40000";
+        ctx.lineWidth = 4;
+        ctx.rotate((Math.PI / 30) * seconds);
+        
+        ctx.beginPath();
+        ctx.moveTo(-30, 0);
+        ctx.lineTo(83, 0);
+        ctx.stroke();
+
+        // 시간 표시 - 초침 중심
+        ctx.beginPath();
+        ctx.arc(0, 0, 10, 0, Math.PI * 2);
+        ctx.fill();
+
+        // 시간 표시 - 초침 끝
+        ctx.beginPath();
+        ctx.arc(95, 0, 10, 0, Math.PI * 2);
+        ctx.stroke();
+
+        // 시간 표시 - 초침 중심 점
+        ctx.fillStyle = "#000";
+        ctx.beginPath();
+        ctx.arc(0, 0, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // 외곽선
+        ctx.strokeStyle = "#325FA2";
+        ctx.lineWidth = 14;
+        ctx.beginPath();
+        ctx.arc(0, 0, 142, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.restore();
+
+        requestAnimationFrame(clock);
+      }
+    </script>
+  </body>
+</html>
