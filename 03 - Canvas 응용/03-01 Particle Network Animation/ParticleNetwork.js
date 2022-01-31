@@ -57,7 +57,7 @@ function Particle() {
   _this.directionAngle = Math.floor(Math.random() * Math.PI * 2);
   _this.vector = {
     x: Math.cos(_this.directionAngle) * _this.speed,
-    y: Math.sin(_this.directionAngle * _this.speed),
+    y: Math.sin(_this.directionAngle) * _this.speed,
   };
 
   // 07-01
