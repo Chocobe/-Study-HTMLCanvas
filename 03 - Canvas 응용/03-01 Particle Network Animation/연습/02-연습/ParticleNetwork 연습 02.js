@@ -20,7 +20,8 @@ class ParticleNetworkCanvas {
   /** @type { Particle[] } */
   particles;
 
-  /** @type {{
+  /** 
+   * @type {{
    *  particleAmount: number
    *  particleColor: string
    *  defaultRadius: number
