@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  padding: 0;
+
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #000;
+}
+
+#particleNetworkCanvas {
+  /* background-color: rgba(240, 246, 0, 1); */
+}
