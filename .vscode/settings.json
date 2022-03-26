@@ -1,0 +1,7 @@
+{
+  // ESLint 자동저장 설정
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  }
+}
