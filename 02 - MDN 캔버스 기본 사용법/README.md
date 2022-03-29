@@ -860,7 +860,7 @@ resetTransform();
 
 
 
-## 06-06. 도형 합성
+# 07. 도형 합성 (Composing ang clipping)
 
 지금까지 ``Canvas`` 에 도형을 그리는 방식은 항상 위에 그리는 방식 이었습니다.
 
@@ -882,7 +882,7 @@ resetTransform();
 
 
 
-## 06-07. 잘라내기 경로 (clipping path)
+## 07-01. 잘라내기 경로 (clipping path)
 
 ``canvas`` 의 일부분만을 렌더링 하고 싶을 때, ``잘라내기 경로 (Clipping path)`` 를 사용합니다.
 
@@ -910,7 +910,7 @@ clip();
 
 
 
-# 07. 기본 애니메이션
+# 08. 기본 애니메이션
 
 애니메이션으로 움직이는 도형을 만들 수 있습니다.
 
@@ -918,7 +918,7 @@ clip();
 
 <br />
 
-## 07-01. 기본 애니메이션 단계
+## 08-01. 기본 애니메이션 단계
 
 애니메이션의 한 장면을 그리려면, 다음과 같은 단계를 밟습니다.
 
@@ -935,7 +935,7 @@ clip();
 
 
 
-## 07-02. 애니메이션 제어하기
+## 08-02. 애니메이션 제어하기
 
 애니메이션은 여러장의 그림을 빠르게 바꾸면서 만들 수 있습니다.
 
@@ -969,5 +969,119 @@ window.requestAnimationFrame(draw); // Frame 에 맞게 draw() 함수를 재귀�
 
 
 
-## 08. 애니메이션 고급
+# 09. 애니메이션 고급
 
+코드를 참고해 주세요.
+
+
+
+<br /><hr /><br />
+
+
+
+# 10. CanvasContext2D.trasform() 메서드 - Matrix 활용
+
+``CanvasContext2D`` 객체의 ``transform()`` 메서드는 도형의 변형에 대한 복합 기능을 제공해 줍니다.
+
+``transform()`` 메서드의 interface 는 다음과 같습니다.
+
+```javascript
+/**
+ * @param { number } a 수평 scale 값 - 기본 스케일일 경우: 1
+ * @param { number } b 수직 skew 값
+ * @param { number } c 수평 skew 값
+ * @param { number } d 수직 scale 값 - 기본 스케일일 경우: 1
+ * @param { number } e 수평 이동 값 (translateX)
+ * @param { number } f 수직 이동 값 (translateY)
+ */
+CanvasContext2D.transform(a, b, c, d, e, f);
+```
+
+<br />
+
+``transform()`` 메서드를 사용하면, ``CanvasContext2D`` 의 ``translate()``, ``scale()`` ``skew()`` 를 한번에 적용할 수 있게 됩니다.
+
+그리고 ``skew`` 의 ``수평`` 과 ``수직`` 을 동일한 값으로 변경하면, ``rotate()`` 효과가 적용 됩니다.
+
+<br />
+
+``Canvas`` 에 다양한 요소들을 그린 상태에서, ``Canvas`` 전체에 대한 ``tralste``, ``scale``, ``rotate``, ``skew`` 를 적용 시키려면, ``Canvas`` 애니메이션 루프의 시작점에서 ``transform()`` 을 사용하여 구현할 수 있습니다.
+
+<br />
+
+```javascript
+class MyCanvas {
+  /** @type { HTMLCanvasElement } */
+  canvas;
+
+  /** @type { CanvasRenderingContext2D } */
+  ctx;
+
+  /** 
+   * Canvas 에 그리고자 하는 Path2D 배열
+   * @type { Path2D[] } 
+   */
+  pathList;
+
+  /**
+   * Canvas 전역에 사용할 transform 값
+   * @type {{
+   *  a: number;
+   *  b: number;
+   *  c: number;
+   *  d: number;
+   *  e: number;
+   *  f: number;
+   * }}
+   */
+  myTransform;
+  
+  /** @type { number } */
+  animationFrameId;
+
+  constructor() {
+    // ... 생략 ...
+
+    this.startAnimation();
+  }
+
+  startAnimation() {
+    this.loopAnimationFrame();
+  }
+
+  loopAnimationFrame() {
+    const { 
+      ctx,
+      transform,
+      canvas: { width, height }
+    } = this;
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.save();
+
+    // 🚀 전역 transform() 적용 부분
+    ctx.transform(
+      ...Object.values(transform)
+    );
+
+    this.drawPathList();
+
+    ctx.restore();
+
+    this.animationFrameId = window.requestAnimationFrame(
+      () => this.loopAnimationFrame()
+    );
+  }
+
+  drawPathList() {
+    const { ctx, pathList } = this;
+
+    ctx.save();
+    ctx.fillStyle = "rgb(0, 181, 255)";
+
+    pathList.forEach(path => ctx.fill(path));
+
+    ctx.restore();
+  }
+}
+```
