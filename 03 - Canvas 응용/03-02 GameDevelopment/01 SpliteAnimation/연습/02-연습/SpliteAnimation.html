@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SpliteAnimation 연습 02</title>
+
+    <link rel="stylesheet" type="text/css" href="./SpliteAnimation.css">
+  </head>
+  
+  <body>
+    <div class="mainWrapper">
+      <div class="mainWrapper-titleWrapper">
+        <h1 class="mainWrapper-titleWrapper-title">
+          SpliteAnimation 연습 02
+        </h1>
+      </div>
+      
+      <div class="mainWrapper-controller">
+        <label for="stateSelector" class="mainWrapper-controller-label">플레이어 상태:</label>
+
+        <select id="stateSelector" class="mainWrapper-controller-selector">
+          <option selected value="idle">Idle</option>
+          <option value="jump">Jump</option>
+          <option value="fall">Fall</option>
+          <option value="run">Run</option>
+          <option value="dizzy">Dizzy</option>
+          <option value="sit">Sit</option>
+          <option value="roll">Roll</option>
+          <option value="bite">Bite</option>
+          <option value="ko">KO</option>
+          <option value="gethit">Get Hit</option>
+        </select>
+      </div>
+
+      <fiture class="mainWrapper-canvasWrapper">
+        <canvas id="spliteAnimationCanvas" class="mainWrapper-canvasWrapper-canvas"></canvas>
+      </fiture>
+    </div>
+
+    <script type="module" src="./SpliteAnimation.js"></script>
+  </body>
+</html>
