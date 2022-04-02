@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: box-sizing;
+}
+
+.spliteAnimation {
+  @apply w-full;
+  @apply flex justify-center items-center flex-wrap;
+
+  height: 100vh;
+  background-color: #121212;
+
+  &-header {
+    @apply w-full;
+    @apply mt-auto;
+    @apply flex justify-center;
+
+    &-title {
+      @apply text-stone-400;
+      font-size: 24px;
+      font-weight: 900;
+    }
+  }
+
+  &-section {
+    @apply w-full;
+    @apply mb-auto;
+    @apply flex justify-center flex-col;
+
+    &-controller {
+      @apply mx-auto mt-5;
+      @apply text-gray-600;
+
+      &-label {
+        @apply mr-2;
+      }
+
+      &-selector {
+        @apply w-40;
+        @apply text-center;
+        @apply outline-none;
+        
+        border-radius: 8px;
+        transition: border-radius 0.28s;
+
+        &:focus {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+      }
+    }
+
+    &-content {
+      @apply mx-auto mt-5;
+
+      &-canvasWrapper {
+        //
+
+        &-canvas {
+          border-bottom: 1px double #333;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SpliteAnimation 연습 03</title>
+  <script defer src="app.bundle.js"></script></head>
+  
+  <body>
+    <main class="spliteAnimation">
+      <header class="spliteAnimation-header">
+        <h1 class="spliteAnimation-header-title">
+          SpliteAnimation 연습 03
+        </h1>
+      </header>
+
+      <section class="spliteAnimation-section">
+        <article class="spliteAnimation-section-controller">
+          <label 
+            for="playerStateSelector"
+            class="spliteAnimation-section-controller-label"
+          >
+            플레이어 상태 선택:
+          </label>
+
+          <select
+            id="playerStateSelector"
+            class="spliteAnimation-section-controller-selector"
+          >
+            <option selected value="idle">Idle</option>
+            <option value="jump">Jump</option>
+            <option value="fall">Fall</option>
+            <option value="run">Run</option>
+            <option value="dizzy">Dizzy</option>
+            <option value="sit">Sit</option>
+            <option value="roll">Roll</option>
+            <option value="bite">Bite</option>
+            <option value="ko">KO</option>
+            <option value="gethit">Get Hit</option>
+          </select>
+        </article>
+
+        <article class="spliteAnimation-section-content">
+          <figure class="spliteAnimation-section-content-canvasWrapper">
+            <canvas 
+              id="spliteAnimationCanvas" 
+              class="spliteAnimation-section-content-canvasWrapper-canvas"
+            >
+            </canvas>
+          </figure>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
