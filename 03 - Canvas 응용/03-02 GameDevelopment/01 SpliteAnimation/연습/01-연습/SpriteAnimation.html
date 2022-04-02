@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SpriteAnimation</title>
+
+    <link rel="stylesheet" type="text/css" href="./SpriteAnimation.css">
+  </head>
+  
+  <body>
+    <div class="sprtieAnimation">
+      <header class="spriteAnimation-header">
+        <h1 class="spriteAnimation-header-title">
+          SpriteAnimation 연습 01
+        </h1>
+
+        <div class="spriteAnimation-header-controller">
+          <select class="spriteAnimation-header-controller-selector">
+            <option value="idle" class="spriteAnimation-header-controller-selector-option">
+              Idle
+            </option>
+
+            <option value="jump" class="spriteAnimation-header-controller-selector-option">
+              Jump
+            </option>
+
+            <option value="fall" class="spriteAnimation-header-controller-selector-option">
+              Fall
+            </option>
+
+            <option value="run" class="spriteAnimation-header-controller-selector-option">
+              Run
+            </option>
+
+            <option value="dizzy" class="spriteAnimation-header-controller-selector-option">
+              Dizzy
+            </option>
+
+            <option value="sit" class="spriteAnimation-header-controller-selector-option">
+              Sit
+            </option>
+
+            <option value="roll" class="spriteAnimation-header-controller-selector-option">
+              Roll
+            </option>
+
+            <option value="bite" class="spriteAnimation-header-controller-selector-option">
+              Bite
+            </option>
+
+            <option value="ko" class="spriteAnimation-header-controller-selector-option">
+              KO
+            </option>
+
+            <option value="gethit" class="spriteAnimation-header-controller-selector-option">
+              Get Hit
+            </option>
+          </select>
+        </div>
+      </header>
+
+      <canvas id="spriteAnimation-canvas" class="spriteAnimation-canvas"></canvas>
+    </div>
+
+    <script type="module" src="./SpriteAnimation.js"></script>
+  </body>
+</html>

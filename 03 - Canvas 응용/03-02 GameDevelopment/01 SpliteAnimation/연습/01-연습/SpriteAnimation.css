@@ -1,0 +1,33 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sprtieAnimation {
+  width: 100%;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.spriteAnimation-header {
+  padding: 20px 40px;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.spriteAnimation-canvas {
+  width: 500px;
+  height: 500px;
+
+  margin-top: 40px;
+
+  border: 1px solid #ff1493;
+}
