@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply m-0 p-0;
+
+  box-sizing: border-box;
+}
+
+body {
+  @apply w-full;
+  @apply flex justify-center items-center;
+  @apply bg-neutral-500;
+  @apply py-5 px-10;
+
+  height: 100vh;
+  
+  .spliteAnimation {
+    @apply flex justify-center items-start flex-wrap;
+
+    &-header {
+      @apply w-full;
+      @apply mt-auto;
+
+      &-title {
+        @apply text-slate-200 text-center;
+
+        font-size: 24px;
+        font-weight: 900;
+      }
+    }
+
+    &-controller {
+      @apply w-full;
+      @apply mt-5;
+      @apply text-slate-400;
+      @apply text-center;
+
+      font-weight: 600;
+
+      &-label {
+        @apply mr-2;
+      }
+
+      &-selector {
+        @apply py-1 px-2;
+        @apply outline-none;
+
+        border: none;
+        border-radius: 8px;
+
+        transition: border-radius 0.28s;
+
+        &:focus {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        &-option {
+          //
+        }
+      }
+    }
+
+    &-content {
+      @apply mt-5;
+
+      border-bottom: 1px solid #ddd;
+
+      &-canvasWrapper {
+        //
+
+        &-canvas {
+          // TODO: resizeCanvas() 만든 후, 삭제하기
+          // width: 400px;
+          // height: 400px;
+        }
+      }
+    }
+  }
+}
