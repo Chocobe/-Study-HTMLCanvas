@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Canvas - toBlob 테스트</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .canvasWrapper {
+        width: 100%;
+
+        padding: 20px;
+
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: start;
+      }
+
+      .canvasWrapper > *:last-child {
+        margin-top: 20px;
+      }
+
+      .sourCanvasWrapper {
+        width: 400px;
+        height: 400px;
+        background-color: rgba(0, 181, 255, 0.2);
+      }
+      #sourCanvas {
+        display: none;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <div class="canvasWrapper">
+      <figure class="sourCanvasWrapper">
+        <canvas id="sourCanvas"></canvas>
+      </figure>
+
+      <canvas id="destCanvas"></canvas>
+    </div>
+
+    <script src="./canvas toBlob 테스트.js"></script>
+  </body>
+</html>

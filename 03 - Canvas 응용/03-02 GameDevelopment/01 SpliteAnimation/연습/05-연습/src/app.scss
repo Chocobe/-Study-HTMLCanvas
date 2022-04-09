@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply m-0 p-0;
+  
+  box-sizing: border-box;
+}
+
+body {
+  @apply w-full;
+  @apply flex justify-center items-center;
+
+  height: 100vh;
+  background-color: #121212;
+
+  .spliteAnimation {
+    //
+
+    &-title {
+      @apply text-gray-400;
+      @apply font-black;
+      @apply text-center;
+
+      font-size: 24px;
+    }
+
+    &-controller {
+      @apply mt-2;
+      @apply w-full;
+
+      &-selector {
+        @apply block;
+        @apply mx-auto;
+        @apply outline-none;
+        @apply text-center;
+        
+        width: 200px;
+        border-radius: 12px;
+
+        transition: border-radius 0.28s;
+
+        &:focus {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        &-option {
+          //
+        }
+      }
+    }
+
+    &-canvasWrapper {
+      @apply mt-4;
+
+      &-canvas {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid #ddd;
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+      }
+    }
+  }
+}
