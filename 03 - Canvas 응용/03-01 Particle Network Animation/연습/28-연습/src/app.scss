@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply m-0 p-0;
+
+  box-sizing: border-box;
+}
+
+.canvasWrapper {
+  @apply w-full;
+  @apply flex justify-center items-center;
+  
+  height: 100vh;
+  background-color: #121212;
+
+  &-canvas {
+    //
+  }
+}
