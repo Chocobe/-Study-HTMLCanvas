@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply m-0 p-0;
+
+  box-sizing: border-box;
+}
+
+.spliteAnimationWrapper {
+  @apply w-full;
+  @apply flex justify-center items-center;
+
+  height: 100vh;
+  background-color: #121212;
+  
+  .spliteAnimation {
+    //
+
+    &-header {
+      //
+
+      &-title {
+        @apply font-black;
+        @apply text-center;
+        
+        color: #999;
+        font-size: 24px;
+      }
+    }
+
+    &-controller {
+      @apply mt-5;
+      @apply text-center;
+
+      &-selector {
+        @apply font-black;
+        @apply text-center;
+        
+        width: 180px;
+        color: #383841;
+        font-size: 18px;
+
+        border-radius: 12px;
+
+        transition: border-radius 0.28s;
+        
+        &:focus {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+        
+        &-option {
+          @apply font-black;
+          
+          color: #777;
+        }
+      }
+    }
+
+    &-canvasWrapper {
+      @apply mt-5;
+
+      &-canvas {
+        background-color: rgba(255, 255, 255, 0.05);
+
+        border-bottom: 1px solid #ddd;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+      }
+    }
+  }
+}
