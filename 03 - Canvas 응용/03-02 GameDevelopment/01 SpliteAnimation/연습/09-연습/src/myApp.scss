@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply m-0 p-0;
+
+  box-sizing: border-box;
+}
+
+.spliteAnimation {
+  @apply w-full;
+  @apply flex justify-center items-center;
+
+  height: 100vh;
+  background-color: #1a1a1e;
+
+  &-main {
+    //
+
+    &-header {
+      //
+
+      &-title {
+        @apply font-black;
+        @apply text-center;
+        
+        color: #999;
+        font-size: 30px;
+      }
+    }
+
+    &-controller {
+      @apply mt-5;
+      @apply text-center;
+
+      &-selector {
+        @apply py-1;
+        @apply text-center font-black;
+
+        width: 200px;
+        border-radius: 16px;
+
+        &-option {
+          @apply font-black;
+        }
+      }
+    }
+
+    &-canvasWrapper {
+      @apply mt-5;
+
+      &-canvas {
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        border-bottom: 2px solid #999;
+      }
+    }
+  }
+}
