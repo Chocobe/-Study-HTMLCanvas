@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sprtie Animation 연습 10</title>
+  <script defer src="index.bundle.js"></script><link href="main.css" rel="stylesheet"></head>
+  
+  <body>
+    <div class="spriteAnimation">
+      <header class="spriteAnimation-header">
+        <h1 class="spriteAnimation-header-title">
+          Sprite Animation 연습 10
+        </h1>
+      </header>
+
+      <div class="spriteAnimation-controller">
+        <select class="spriteAnimation-controller-selector">
+          <!-- TODO: 동적으로 등록 하기 -->
+          <option
+            class="spriteAnimation-controller-selector-option"
+            value="state-01"
+            selected
+          >
+            State-01
+          </option>
+        </select>
+      </div>
+
+      <main class="spriteAnimation-canvasWrapper">
+        <!-- TODO: 동적으로 등록 하기 -->
+        <canvas class="spriteAnimation-canvasWrapper-canvas"></canvas>
+      </main>
+    </div>
+  </body>
+</html>
