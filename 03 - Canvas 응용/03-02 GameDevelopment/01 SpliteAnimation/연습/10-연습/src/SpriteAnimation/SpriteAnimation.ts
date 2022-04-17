@@ -1,17 +1,25 @@
+import Player from "@/Player/Player";
+
 export default class SpriteAnimation {
   $canvas!: HTMLCanvasElement;
   ctx!: CanvasRenderingContext2D;
 
-  $bitmap!: HTMLImageElement;
+  player!: Player;
+  
+  // $bitmap!: HTMLImageElement;
 
-  frames = 0;
+  // frames = 0;
   animationFrameId!: number;
 
   constructor() {
     this.initCanvas();
     this.resizeCanvas();
 
-    this.drawPlayer();
+    this.initPlayer();
+    
+    // this.drawPlayer();
+
+    this.startAnimation();
   }
 
   initCanvas() {
@@ -37,60 +45,102 @@ export default class SpriteAnimation {
     $canvas.height = 200;
   }
 
-  drawPlayer() {
-    const $img = new Image();
+  initPlayer() {
+    this.player = new Player(this.$canvas);
+  }
+
+  async startAnimation() {
+    const {
+      player,
+    } = this;
     
-    $img.onload = () => {
-      this.$bitmap = $img;
+    await Promise.all([
+      player.loadingPromise,
+    ]);
 
-      this.loopAnimationFrames();
-    }
-
-    $img.src = "../assets/kirby_sprite_sheet.png";
+    this.loopAnimationFrames();
   }
 
   loopAnimationFrames() {
     const {
       ctx,
-      $canvas: {
-        width: canvasWidth,
-        height: canvasHeight,
-      },
-      $bitmap,
-      frames,
+      $canvas: { width, height },
     } = this;
 
-    const staggerFrames = 15;
-    
-    const row = 0;
-    const col = Math.floor(frames / staggerFrames) % 10;
-
-    const bitmapWidth = 29;
-    const bitmapHeight = 25;
-
-    const bitmapX = col * bitmapWidth;
-    const bitmapY = row * bitmapHeight;
-
     ctx.save();
-    ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+    ctx.clearRect(0, 0, width, height);
 
-    ctx.drawImage(
-      $bitmap,
-      bitmapX, bitmapY, bitmapWidth, bitmapHeight,
-      0, 0, canvasWidth, canvasHeight
-    );
+    this.drawScene();
 
     ctx.restore();
 
-    this.animationFrameId = 
-      window.requestAnimationFrame(() => {
-        this.frames++;
-
-        if (this.frames >= Number.MAX_SAFE_INTEGER) {
-          this.frames = 0;
-        }
-
-        this.loopAnimationFrames();
-      });
+    this.animationFrameId = window.requestAnimationFrame(
+      () => this.loopAnimationFrames()
+    );
   }
+
+  drawScene() {
+    this.drawPlayer();
+  }
+
+  drawPlayer() {
+    this.player.draw();
+  }
+
+  // drawPlayer() {
+  //   const $img = new Image();
+    
+  //   $img.onload = () => {
+  //     this.$bitmap = $img;
+
+  //     this.loopAnimationFrames();
+  //   }
+
+  //   $img.src = "../assets/kirby_sprite_sheet.png";
+  // }
+
+  // loopAnimationFrames() {
+  //   const {
+  //     ctx,
+  //     $canvas: {
+  //       width: canvasWidth,
+  //       height: canvasHeight,
+  //     },
+  //     $bitmap,
+  //     frames,
+  //   } = this;
+
+  //   const staggerFrames = 15;
+    
+  //   const row = 0;
+  //   const col = Math.floor(frames / staggerFrames) % 10;
+
+  //   const bitmapWidth = 29;
+  //   const bitmapHeight = 25;
+
+  //   const bitmapX = col * bitmapWidth;
+  //   const bitmapY = row * bitmapHeight;
+
+  //   ctx.save();
+  //   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+  //   ctx.drawImage(
+  //     $bitmap,
+  //     bitmapX, bitmapY, bitmapWidth, bitmapHeight,
+  //     0, 0, canvasWidth, canvasHeight
+  //   );
+
+  //   ctx.restore();
+
+  //   this.animationFrameId = 
+  //     window.requestAnimationFrame(() => {
+  //       this.frames++;
+
+  //       if (this.frames >= Number.MAX_SAFE_INTEGER) {
+  //         this.frames = 0;
+  //       }
+
+  //       this.loopAnimationFrames();
+  //     });
+  // }
 }

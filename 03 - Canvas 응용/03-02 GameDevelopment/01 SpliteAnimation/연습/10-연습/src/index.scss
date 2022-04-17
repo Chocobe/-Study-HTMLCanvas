@@ -34,9 +34,11 @@
       @apply text-center;
 
       &-selector {
-        @apply py-2 px-4;
+        @apply py-2;
         @apply font-black;
+        @apply text-center;
 
+        width: 200px;
         color: #ddd;
         background-color: #333;
         border-radius: 18px;
