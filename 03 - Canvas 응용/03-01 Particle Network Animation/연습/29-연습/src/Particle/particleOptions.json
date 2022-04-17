@@ -1,0 +1,8 @@
+{
+  "amount": 50,
+  "color": "rgb(255, 255, 255)",
+  "defaultRadius": 5,
+  "variantRadius": 5,
+  "defaultSpeed": 3,
+  "variantSpeed": 5
+}
